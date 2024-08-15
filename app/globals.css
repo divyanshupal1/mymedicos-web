@@ -1,10 +1,10 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
 
 
-  @layer base {
+@layer base {
     :root {
       --background: 0 0% 100%;
       --foreground: 222.2 84% 4.9%;
@@ -26,9 +26,9 @@
       --input: 214.3 31.8% 91.4%;
       --ring: 174 66% 49%;
       --radius: 0.5rem;
-    }
+}
   
-    .dark {
+.dark {
       --background: 222.2 84% 4.9%;
       --foreground: 210 40% 98%;
       --card: 174.18 71.47% 11.39%;
@@ -49,24 +49,24 @@
       --input: 174.47 91.89% 14.12%;
       --ring: 174 66% 49%;  
     }
-  }
+}
   
   
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
-  @layer components {
-    .scroll-hide::-webkit-scrollbar {
-      display: none;
-    }
+@layer components {
+  .scroll-hide::-webkit-scrollbar {
+    display: none;
   }
+}
 
   
 

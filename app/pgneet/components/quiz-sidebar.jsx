@@ -1,6 +1,5 @@
 "use client"
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import {cn} from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 
@@ -21,7 +20,7 @@ const quizBubbleVariants = cva(
 )
 
 
-const QuizSidebar = ({questions,answered,score,setCurrentQuestion,currentQuestion}) => {
+const QuizSidebar = ({questions,answered,setCurrentQuestion,currentQuestion}) => {
     return (
         <>            
             <div className='flex items-start justify-start gap-x-2 gap-y-3 flex-wrap p-4 flex-shrink-0 *:flex-grow-0'>
