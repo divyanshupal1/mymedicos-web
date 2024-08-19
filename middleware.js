@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
  
 // This function can be marked `async` if using `await` inside
 export default async function middleware(request) {
-  const token = request.cookies.get('authtoken').value
+  const token = request.cookies.get('authtoken')?.value
   const path = request.nextUrl.pathname.split('/') 
 
   if (!token) {

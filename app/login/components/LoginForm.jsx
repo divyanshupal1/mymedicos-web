@@ -79,19 +79,19 @@ const LoginForm = () => {
         confirmationResult.confirm(code).then((result) => {
             const user = result.user;
             setLoading(false)
-            setUser(user)
-            console.log(user)
+            
             fetch('/api/auth/login',{
                 method:'POST',
                 body:JSON.stringify({user:user}),
             }).then((res)=>{
                 const data = res.json()
-                console.log(data)
-                if(data.success) router.push('/home')
+                if(data.success){
+                    user.subscription = data.subscription
+                    setUser(user)
+                    router.push('/home')
+                }
                 else router.refresh()
-            })
-            
-            
+            })       
         })
         .catch((error) => {
             console.error("Error: ",error);
