@@ -33,6 +33,15 @@ const AuthPage = () => {
                 loggeduser==null && toast({
                     title:`Welcome back ${user.displayName!=null ? user.displayName :""} 😊 !`,
                 })
+                fetch('/api/auth/login',{
+                    method:'POST',
+                    body:JSON.stringify({user:user}),
+                }).then(async (res)=>{
+                    const data = await res.json()
+                    if(data.success){
+                        user.subscription = data.subscription
+                    }
+                })
                 setUser(user)
                 if(query=='/') router.push('/home')
                 else router.push(query)

@@ -80,7 +80,17 @@ const LoginForm = () => {
             const user = result.user;
             setLoading(false)
             setUser(user)
-            router.push('/home')
+            console.log(user)
+            fetch('/api/auth/login',{
+                method:'POST',
+                body:JSON.stringify({user:user}),
+            }).then((res)=>{
+                const data = res.json()
+                console.log(data)
+                if(data.success) router.push('/home')
+                else router.refresh()
+            })
+            
             
         })
         .catch((error) => {
@@ -96,8 +106,13 @@ const LoginForm = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
-                console.log(user)
+                fetch('/api/auth/login',{
+                    method:'POST',
+                    body:JSON.stringify({user:user}),
+                }).then((res)=>{
+                    console.log(res.json())
+                })
+                setUser(user)
             } else {
 
             }

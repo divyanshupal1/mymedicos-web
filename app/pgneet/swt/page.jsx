@@ -20,7 +20,7 @@ const SWTPage = async () => {
             <div className='subjects w-full mt-8 pl-7 flex gap-x-2 flex-wrap gap-y-2 max-lg:justify-center'>
                 {
                     categories.map((category,index) => (
-                        <CategoryCard key={index} category={category} section={"swt"} />
+                        <CategoryCard key={index} title={category} category={"swt"} speciality={category} section={"pgneet"} />
                     ))
                 }
             </div>

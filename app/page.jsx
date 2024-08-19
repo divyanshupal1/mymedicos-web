@@ -20,6 +20,12 @@ export default function Home() {
       else{
         onAuthStateChanged(auth, (user) => {
           if (user) {
+              fetch('/api/auth/login',{
+                  method:'POST',
+                  body:JSON.stringify({user:user}),
+              }).then((res)=>{
+                  console.log(res.json())
+              })
               loggeduser==null && toast({
                   title:`Welcome back ${user.displayName!=null ? user.displayName :""} 😊 !`,
               })

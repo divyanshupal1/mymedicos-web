@@ -48,8 +48,8 @@ export const Navbar = () => {
     if(path[1]==='login' || path[1]==='signup'){
         return null
     }
-    if(path[1]=="pgneet" && path[2]=="swt" && path.length>4) return null
-    if(path[1]=="pgneet" && path[2]=="cwt" && path.length>5) return null
+    if(path[1]=="test") return null
+
 
 
     return (

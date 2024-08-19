@@ -19,8 +19,8 @@ const CWTPage = async () => {
             </div>
             <div className='subjects w-full mt-8 pl-7 flex gap-x-2 flex-wrap gap-y-2 max-lg:justify-center'>
                 {
-                    categories.map((category,index) => (
-                        <CategoryCard key={index} category={category} section={"cwt"} />
+                    categories.map((speciality,index) => (
+                        <CategoryCard key={index} section={"pgneet"} category={"cwt"} speciality={speciality} title={speciality} />
                     ))
                 }
             </div>
