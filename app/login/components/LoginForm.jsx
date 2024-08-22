@@ -20,6 +20,7 @@ import {
 import { ChevronLeft } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
+import { useCustomAuth } from '@/store/useCustomAuthHook';
 
 
 const LoginForm = () => {
@@ -63,7 +64,7 @@ const LoginForm = () => {
             setStep(2)
             setLoading(false)
         }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             toast({
                 title: 'OTP not sent',
                 variant:"destructive"
@@ -77,21 +78,18 @@ const LoginForm = () => {
         setLoading(true)
         let confirmationResult = window.confirmationResult;
         confirmationResult.confirm(code).then((result) => {
-            const user = result.user;
-            setLoading(false)
-            
+            const user = result.user;            
             fetch('/api/auth/login',{
                 method:'POST',
                 body:JSON.stringify({user:user}),
-            }).then((res)=>{
-                const data = res.json()
+            }).then(async(res)=>{
+                const data = await res.json()
                 if(data.success){
-                    user.subscription = data.subscription
-                    setUser(user)
+                    setUser({...user,subscription:data.subscription})
                     router.push('/home')
                 }
-                else router.refresh()
-            })       
+                setLoading(false)
+            })   
         })
         .catch((error) => {
             console.error("Error: ",error);
@@ -100,24 +98,11 @@ const LoginForm = () => {
                 variant:"destructive"
             })
             setVerifyLoading(false)
+            setLoading(false)
         });
     }
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                fetch('/api/auth/login',{
-                    method:'POST',
-                    body:JSON.stringify({user:user}),
-                }).then((res)=>{
-                    console.log(res.json())
-                })
-                setUser(user)
-            } else {
-
-            }
-        });
-    },[])
+    const user = useCustomAuth('/home')
 
 
 

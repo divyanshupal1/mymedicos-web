@@ -6,7 +6,8 @@ import QuizList from '@/app/pgneet/components/quiz_list';
 
 const QuizListPage = async ({params}) => {
 
-    let chapter = params.chapter.replace("%20"," ")
+    let chapter = params.chapter.replaceAll("%20"," ")
+    chapter = chapter.replaceAll("%26","&")
     // let category = params.speciality.replace("%20"," ")
     let quizes = []
     const QuizRef = collection(db, "PGupload", "CWT","Quiz");

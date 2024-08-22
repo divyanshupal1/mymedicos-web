@@ -38,9 +38,11 @@ const Test = () => {
       .then(data => {
           if(data.success){
             setQuiz(data.data)
+            setLoading(false)
+            //console.log(data.data)
           }
           else{
-            console.log(data.message)
+            //console.log(data.message)
           }
           setLoading(false)
       }).catch((e)=>{
@@ -51,7 +53,7 @@ const Test = () => {
   },[category, id, section])
 
   if(loading || user==null || section==undefined || category==undefined || id==undefined || quiz.qid==undefined) return <LoadingScreen/>  
-  return  <TestPage category={section} quizData={JSON.stringify(quiz)}/>
+  return  <TestPage category={category} section={section} quizData={JSON.stringify(quiz)}/>
 }
 
 export default Test

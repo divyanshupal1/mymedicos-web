@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server'
 export default async function middleware(request) {
   const token = request.cookies.get('authtoken')?.value
   const path = request.nextUrl.pathname.split('/') 
+  //console.log(request.nextUrl.pathname)
 
   if (!token) {
     return NextResponse.redirect(new URL('/login',request.nextUrl))
@@ -23,5 +24,6 @@ export const config = {
     '/neetss/:path*',
     '/pgneet/:path*',
     '/profile/:path*',
+    '/api/getQuiz/:path*',
   ],
 }

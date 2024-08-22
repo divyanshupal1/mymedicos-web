@@ -17,12 +17,12 @@ export async function POST(req) {
                 response.cookies.set("authtoken", token)
                 resolve(response);
             }).catch((error) => {
-                console.log("Error fetching user data:", error);
+                //console.log("Error fetching user data:", error);
                 reject(JSON.stringify({message:"unauthorized",success:false}));
             });
         });   
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return new NextResponse().json({message:"unauthorized",success:false})      
     }
 }
