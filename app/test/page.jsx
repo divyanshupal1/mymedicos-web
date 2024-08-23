@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
+import { AlreadySumbitted, UpgradePlan } from './components/defaultPages'
 
 
 const Test = () => {
@@ -21,7 +22,7 @@ const Test = () => {
   const section = useSearchParams().get('section')
   const category = useSearchParams().get('category')
   const id = useSearchParams().get('id')
-
+  const [code,setCode] = useState(null)
   const [loading,setLoading] = useState(true)
   const [quiz,setQuiz] = useState({})
 
@@ -36,13 +37,14 @@ const Test = () => {
       })
       .then(res => res.json())
       .then(data => {
+          console.log(data)
           if(data.success){
             setQuiz(data.data)
             setLoading(false)
             //console.log(data.data)
           }
           else{
-            //console.log(data.message)
+            setCode(data.code)
           }
           setLoading(false)
       }).catch((e)=>{
@@ -52,7 +54,9 @@ const Test = () => {
     getQuiz()
   },[category, id, section])
 
-  if(loading || user==null || section==undefined || category==undefined || id==undefined || quiz.qid==undefined) return <LoadingScreen/>  
+  if(loading || user==null) return <LoadingScreen/>  
+  if(code==1) return <AlreadySumbitted url={section+'/'+category}/>
+  if(code==2 || code==3) return <UpgradePlan/>  
   return  <TestPage category={category} section={section} quizData={JSON.stringify(quiz)}/>
 }
 

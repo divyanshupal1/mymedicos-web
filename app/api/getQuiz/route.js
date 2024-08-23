@@ -73,7 +73,11 @@ export async function GET(req, res) {
             return new NextResponse(JSON.stringify({success:true,data:quiz,message:"Free Quiz"}))
         }
 
-        if(subscription.Field.includes(plans[section])==-1){
+        if(subscription==null){
+            return new NextResponse(JSON.stringify({message:"No subscription found",success:false,code:2}))
+        }
+
+        if(subscription?.Field?.includes(plans[section])==-1){
             return new NextResponse(JSON.stringify({message:"Not Subscribed for PGNEET",success:false,code:2}))
         }
 

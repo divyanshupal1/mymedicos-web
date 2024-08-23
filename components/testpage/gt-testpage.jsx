@@ -16,6 +16,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Checkbox } from '../ui/checkbox';
+import { AlreadySumbitted } from '@/app/test/components/defaultPages';
 
 
 const dummyImage =["noimage","https://firebasestorage.googleapis.com/v0/b/mymedicosupdated.appspot.com/o/Quiz%2Fthumbnails%2F6b7d1ffd-7637-4633-9fc8-004702f7ada4No.png?alt=media&token=5e162813-a98b-449c-a07d-e34c5faa1bde"];
@@ -70,7 +71,6 @@ const GTTestPage = ({quizData,category}) => {
             progress:answered,
             review:review,
             submitted:true,
-            timeleft:timeLeft
         })
         .then(()=>{
             setSynced(1)
@@ -83,6 +83,7 @@ const GTTestPage = ({quizData,category}) => {
             })
         }).catch((err)=>{
             setSynced(0)
+            console.log(err)
             setSubmitting(false)
             toast({
                 title: "Failed Submitting Quiz",
@@ -119,7 +120,8 @@ const GTTestPage = ({quizData,category}) => {
     }, [answered,review])
 
     if(loading || quiz.progressData?.submitted == undefined) return <div className='w-full h-screen flex items-center justify-center'><div className='animate-spin text-green-600'><AiOutlineLoading3Quarters className='scale-[2]'/></div></div>
-    if(isSubmitted) return <ResultPage quiz={quiz} answers={answered}/>
+    if(isSubmitted) return <AlreadySumbitted url={"home"}/>
+    // if(isSubmitted) return <ResultPage quiz={quiz} answers={answered}/>
 
     return (
         <div className='w-full min-h-screen h-full max-lg:h-auto flex items-start justify-start gap-x-2 max-lg:flex-col'>

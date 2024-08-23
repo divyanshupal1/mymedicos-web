@@ -40,10 +40,10 @@ const Test = () => {
           }
         })
         let data = await res.json()
+        console.log(data)
         if(data.success){
           setQuiz(data.data)
           setLoading(false)
-          //console.log(data.data)
         }
         else{
           setCode(data.code)
