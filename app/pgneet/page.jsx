@@ -57,8 +57,8 @@ const PGNEET = () => {
                                 section={quiz.section} 
                                 category={"gt"}
                                 speciality={undefined} 
-                                quiz={quiz.quiz} 
-                                locked={tabs.indexOf(quiz.hyOption)>allowed}
+                                quiz={quiz?.quiz} 
+                                locked={tabs.indexOf(quiz?.quiz?.hyOption)>allowed}
                             />
                         )
                     }
@@ -74,11 +74,11 @@ const PGNEET = () => {
                         practiceSets.map((quiz,index)=>
                             <QuizCard 
                                 key={index} 
-                                section={quiz.section} 
+                                section={quiz?.section} 
                                 category={quiz.category}
-                                speciality={quiz.quiz.speciality} 
-                                quiz={quiz.quiz} 
-                                locked={tabs.indexOf(quiz.quiz.hyOption)>allowed}
+                                speciality={quiz?.quiz?.speciality} 
+                                quiz={quiz?.quiz} 
+                                locked={tabs.indexOf(quiz.quiz?.hyOption)>allowed}
                             />
                         )
                     }
