@@ -34,7 +34,7 @@ const QuizSidebar = ({questions,answered,setCurrentQuestion,currentQuestion,revi
                             'default'
                         }))} 
                         key={index}
-                        >   {review.includes(index) && <span className='w-2 h-2 rounded-full absolute top-0 right-0 z-10 bg-orange-500'></span>}
+                        >   {review.includes(index) && <span className='w-2 h-2 rounded-full absolute top-0 right-0 bg-orange-500'></span>}
                             {index+1}
                         </div>
                     )

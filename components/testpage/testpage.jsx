@@ -125,8 +125,8 @@ const TestPage = ({quizData,category,section}) => {
     if(isSubmitted) return <ResultPage quiz={quiz} answers={answered} score={score}/>
 
     return (
-        <div className='w-full min-h-screen h-full max-lg:h-auto flex items-start justify-start gap-x-2 max-lg:flex-col-reverse'>
-            <div className='w-4/12 max-lg:w-full max-lg:h-auto h-full max-h-screen max-lg:min-h-screen sticky max-lg:static top-0 bg-slate-200 rounded-md  flex flex-col gap-y-4 lg:overflow-y-scroll max-lg:overflow-auto max-lg:scroll-hide'>
+        <div className='w-full min-h-screen h-auto max-lg:h-auto flex items-start justify-start gap-x-2 max-lg:flex-col-reverse'>
+            <div className='w-4/12 max-lg:w-full h-full min-h-screen max-lg:min-h-screen sticky top-0 bg-slate-200 rounded-md  flex flex-col gap-y-4 lg:overflow-y-scroll max-lg:overflow-auto max-lg:scroll-hide'>
                 <div className='group font-bold text-lg p-4 pb-0 bg-slate-200 bg-opacity-80 backdrop-blur-md sticky top-0 w-full flex justify-between items-center'>
                     {quiz.title}
                     <div className='bg-white p-1 font-normal rounded-full flex items-center gap-x-3 px-3 cursor-pointer'>

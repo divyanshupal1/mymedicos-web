@@ -8,7 +8,8 @@ const plans = {
     'pgneet':'PGNEET'
 }
 const collections = {
-    'pgneet':"PGupload"
+    'pgneet':"PGupload",
+    'fmge':'Fmge'
 }
 const categories = {
     'swt':"Weekley",
@@ -40,6 +41,9 @@ export async function GET(req, res) {
             .then(doc => {
                 quiz = doc.data()
         })
+        if(quiz.type!='Free' &&( subscription==null || subscription?.Field?.includes(plans[section])==-1 || hyOptions.indexOf(subscription.hyOption)<hyOptions.indexOf(quiz.hyOption))){
+            return new NextResponse(JSON.stringify({message:"Upgrade Plan",success:false,code:2}))
+        }
         if(category=='gt'){
             quiz.Data = quiz.Data.map(data=>({...data,Correct:null,Description:null}))
             const progressDoc = await admin.firestore().collection('QuizProgress').doc(uid).collection('GT').doc(quiz.qid).get()
@@ -68,23 +72,9 @@ export async function GET(req, res) {
                 admin.firestore().collection('QuizProgress').doc(uid).collection('GT').doc(quiz.qid).set(defaultProgress)
             }
         }
-
         if(quiz.type=='Free'){
             return new NextResponse(JSON.stringify({success:true,data:quiz,message:"Free Quiz"}))
         }
-
-        if(subscription==null){
-            return new NextResponse(JSON.stringify({message:"No subscription found",success:false,code:2}))
-        }
-
-        if(subscription?.Field?.includes(plans[section])==-1){
-            return new NextResponse(JSON.stringify({message:"Not Subscribed for PGNEET",success:false,code:2}))
-        }
-
-        if(hyOptions.indexOf(subscription.hyOption)<hyOptions.indexOf(quiz.hyOption)){
-            return new Response(JSON.stringify({message:"upgrade plan to access the quiz",success:false,code:3}))
-        }
-
         return new NextResponse(JSON.stringify({success:true,data:quiz,message:"Quiz fetched"}))
         
 

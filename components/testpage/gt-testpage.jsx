@@ -125,7 +125,7 @@ const GTTestPage = ({quizData,category}) => {
 
     return (
         <div className='w-full min-h-screen h-full max-lg:h-auto flex items-start justify-start gap-x-2 max-lg:flex-col'>
-            <div className='w-4/12 max-lg:w-full max-lg:h-auto h-full max-h-screen max-lg:min-h-screen sticky max-lg:static top-0 bg-slate-200 rounded-md  flex flex-col gap-y-4 lg:overflow-y-scroll max-lg:overflow-auto max-lg:scroll-hide'>
+            <div className='w-4/12 max-lg:w-full max-lg:h-auto h-full max-h-screen max-lg:min-h-screen sticky  top-0 bg-slate-200 rounded-md  flex flex-col gap-y-4 lg:overflow-y-scroll max-lg:overflow-auto max-lg:scroll-hide'>
                 <div className='sticky top-0 z-20 bg-slate-200 '>
                 <div className='flex justify-between items-center px-4 py-2 font-semibold rounded-full bg-neutral-50 mt-2 mx-2'>
                     <span>Time left</span> 

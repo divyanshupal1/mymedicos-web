@@ -16,18 +16,18 @@ const tab_groups = [
         group_title:"QUESTION BANK",
         open:true,
         group_tabs:[
-            {title:"Home",href:"/pgneet",active:"/",ico:"HO"},
-            {title:"Grand Test",href:"/pgneet/gt",active:"gt",ico:"GT"},
-            {title:"Subject Wise",href:"/pgneet/swt",active:"swt",ico:"SW"},
-            {title:"Chapter Wise",href:"/pgneet/cwt",active:"cwt",ico:"CW"},
+            {title:"Home",href:"/fmge",active:"/",ico:"HO"},
+            {title:"Grand Test",href:"/fmge/gt",active:"gt",ico:"GT"},
+            {title:"Subject Wise",href:"/fmge/swt",active:"swt",ico:"SW"},
+            {title:"Chapter Wise",href:"/fmge/cwt",active:"cwt",ico:"CW"},
         ]
     },
     {
         group_title:"Study Material",
         open:true,
         group_tabs:[
-            {title:"Notes",href:"/pgneet/notes",active:"notes",ico:"NO"},
-            {title:"Videos",href:"/pgneet/videos",active:"videos",ico:"VI"},
+            {title:"Notes",href:"/fmge/notes",active:"notes",ico:"NO"},
+            {title:"Videos",href:"/fmge/videos",active:"videos",ico:"VI"},
         ]
     },
 ]
@@ -35,8 +35,8 @@ const tab_groups = [
 const Sidebar = () => {
     const [open, setOpen] = React.useState(false)
     const path = usePathname().split("/")
-    if(path[1]=="pgneet" && path[2]=="swt" && path.length>4) return null
-    if(path[1]=="pgneet" && path[2]=="cwt" && path.length>5) return null
+    if(path[1]=="fmge" && path[2]=="swt" && path.length>4) return null
+    if(path[1]=="fmge" && path[2]=="cwt" && path.length>5) return null
 
     return (
         <div className={`sidebar border-r-2 border-slate-100 h-full min-h-screen  w-1/5 max-md:w-full min-w-[200px] max-w-[400px] sticky top-0 max-md:absolute bg-background transition-all ${open?"max-md:translate-x-0":"max-md:-translate-x-full"}`}>

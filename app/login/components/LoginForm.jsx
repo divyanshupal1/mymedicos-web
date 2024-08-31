@@ -129,7 +129,11 @@ const LoginForm = () => {
                 </p>
             </div>
             <form className='w-full max-w-[400px] flex flex-col gap-y-6 mt-12' onSubmit={(e)=>onSignInSubmit(e)}>
-                <Input type="text" placeholder="Phone Number" value={phone} onChange={(e)=>{setPhone(e.target.value)}} />
+                <Input type="text" placeholder="Phone Number" value={phone} 
+                    onChange={(e)=>{
+                        if(e.target.value.length<=10) setPhone(e.target.value)                        
+                    }} 
+                />
                 <Button className="rounded-full w-full" disabled={phone.length!=10} loading={loading}>Continue</Button>
             </form>
             <p className='text-center text-xs mt-5'>By Clicking, I accept the terms of service and privacy policy</p>
