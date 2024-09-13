@@ -6,6 +6,8 @@ import { useUserStore } from '@/store/userStore'
 import { useRouter } from 'next/navigation'
 import Plans from './components/plans'
 import GTsection from './components/gt_section'
+import AnalyticsSection from './components/analytics_section'
+import GridSection from './components/grid_section'
 
 const Page = () => {
 
@@ -31,6 +33,15 @@ const Page = () => {
             </div>
             <div className='w-full h-auto'>
                 <GTsection/>
+            </div>
+            <div className='w-full h-auto'>
+                <AnalyticsSection/>
+            </div>
+            <div className='w-full h-auto'>
+                <GridSection/>
+            </div>
+            <div className='min-h-[40vh] w-full bg-neutral-50 border-t border-neutral-100 mt-[5%]'>
+
             </div>
         </div>
     )
