@@ -4,7 +4,13 @@ import QuizCard from './quiz_card'
 import { useParams } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 
-const tabs = ['All','Basic','Standard','Premium','Pro']
+const tabs = ['ALL','BASIC','STANDARD','PREMIUM','PRO']
+const quizToPlan = {
+    'Free':'BASIC',
+    'Standard':'STANDARD',
+    'Premium':'PREMIUM',
+    'Pro':'PRO'
+}
 
 const QuizList = ({quizes,section,category}) => {
     
@@ -15,14 +21,15 @@ const QuizList = ({quizes,section,category}) => {
     quizes = JSON.parse(quizes)
 
     const quizData = {
-        'All':quizes,
-        'Basic':quizes.filter(quiz => quiz.type == 'Free'),
-        'Standard':quizes.filter(quiz => quiz.hyOption == 'Standard'),
-        'Premium':quizes.filter(quiz => quiz.hyOption == 'Premium'),
-        'Pro':quizes.filter(quiz => quiz.hyOption == 'Pro')
+        'ALL':quizes,
+        'BASIC':quizes.filter(quiz => quiz.type == 'Free'),
+        'STANDARD':quizes.filter(quiz => quiz.hyOption == 'Standard'),
+        'PREMIUM':quizes.filter(quiz => quiz.hyOption == 'Premium'),
+        'PRO':quizes.filter(quiz => quiz.hyOption == 'Pro')
     }
 
-    const allowed = tabs.indexOf(user?.subscription?.hyOption) || 1
+    const allowed = tabs.indexOf(user?.subscription?.PGNEET?.Plan) || 1
+    
 
     return (
         <>
@@ -50,9 +57,9 @@ const QuizList = ({quizes,section,category}) => {
                                 key={index} 
                                 section={section} 
                                 category={category}
-                                speciality={speciality} 
+                                speciality={speciality}
                                 quiz={quiz} 
-                                locked={tabs.indexOf(quiz.hyOption)>allowed}
+                                locked={tabs.indexOf(quizToPlan[quiz.hyOption])>allowed}
                             />
                         ))
                     }

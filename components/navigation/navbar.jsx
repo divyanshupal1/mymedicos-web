@@ -23,18 +23,18 @@ import { HiMenuAlt3 } from "react-icons/hi";
 
 const links = [
     {sub:false,name:'Home',href:"/home"},
-    {sub:false,name:'MBBS',href:"/mbbs"},
+    // {sub:false,name:'MBBS',href:"/mbbs"},
     {sub:false,name:'PG NEET',href:"/pgneet"},
     {sub:false,name:'FMGE',href:"/fmge"},
-    {sub:false,name:'NEET SS',href:"/neetss"},
-    {   
-        sub:true,
-        dropdown : [
-            {name:'News',href:"/news"},
-            {name:'Blog',href:"/blog"},
-        ],
-        name:'Explore'
-    },
+    // {sub:false,name:'NEET SS',href:"/neetss"},
+    // {   
+    //     sub:true,
+    //     dropdown : [
+    //         {name:'News',href:"/news"},
+    //         {name:'Blog',href:"/blog"},
+    //     ],
+    //     name:'Explore'
+    // },
 ]
 
 export const Navbar = () => {
@@ -45,10 +45,9 @@ export const Navbar = () => {
         loggeduser:state.user,
     }))        
 
-    if(path[1]==='login' || path[1]==='signup'){
+    if(path[1]==='auth' || path[1]=="test" || path[1]=="checkout"){
         return null
     }
-    if(path[1]=="test") return null
 
 
 
@@ -84,8 +83,8 @@ export const Navbar = () => {
                 {
                     path[1]== ''  && 
                     <div className='flex items-center gap-x-2'>
-                        <Link href='/login'><button className='rounded-full bg-[#00BFA6] text-white p-2 px-4'>Login</button></Link>
-                        <Link href='/signup'><button className='rounded-full bg-[#00BFA6] text-white p-2 px-4'>Signup</button></Link>
+                        <Link href='/auth/login'><button className='rounded-full bg-[#00BFA6] text-white p-2 px-4'>Login</button></Link>
+                        {/* <Link href='/auth/signup'><button className='rounded-full bg-[#00BFA6] text-white p-2 px-4'>Signup</button></Link> */}
                     </div>
                 }
             </div>
@@ -144,7 +143,6 @@ import { signOut } from 'firebase/auth'
 
 
 const ProfileButton = () => {
-    const router = useRouter()
     const {toast} = useToast()
     const {loggeduser,setUser} = useUserStore((state)=>({
         loggeduser:state.user,
@@ -152,7 +150,6 @@ const ProfileButton = () => {
     }))  
     const signOutUser = () => {
         signOut(auth).then(() => {
-            router.push('/login')
             setUser(null)
         }).catch((error) => {
             toast({
@@ -166,10 +163,10 @@ const ProfileButton = () => {
             loggeduser!=null &&
             <DropdownMenu>
                 <DropdownMenuTrigger>
-                    <div className='flex items-center gap-x-2 rounded-full p-1  border-2'>
+                    <div className='flex items-center gap-x-2 rounded-full'>
                         <Avatar className="w-8 h-8">
-                            <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback>{}</AvatarFallback>
+                            <AvatarImage src={loggeduser.photoURL} />
+                                <AvatarFallback>{loggeduser.displayName.substring(0,2).toUpperCase()}</AvatarFallback>
                             </Avatar>
                         </div>
                     </DropdownMenuTrigger>
@@ -197,6 +194,16 @@ const SearchBar = ({className=""}) => {
 
 const SideBar = () => {
     const [open,setOpen] = React.useState(false)
+    const {toast} = useToast()    
+    const signOutUser = () => {
+        signOut(auth).then(() => {
+            setUser(null)
+        }).catch((error) => {
+            toast({
+                title: 'Error signing out',
+            })
+        });
+    }
     return (
         <>            
             <HiMenuAlt3 className='scale-[1.5]' onClick={()=>setOpen(!open)}/>
@@ -216,7 +223,7 @@ const SideBar = () => {
                         }
                     </div>
                     <div className='mt-auto'>
-                        <Button className='w-full rounded-full' variant="secondary">Logout</Button>
+                        <Button className='w-full rounded-full' variant="secondary" onClick={signOutUser}>Logout</Button>
                     </div>
                 </div>
             }

@@ -17,12 +17,12 @@ export async function POST(req) {
                 response.cookies.set("authtoken", token)
                 resolve(response);
             }).catch((error) => {
-                //console.log("Error fetching user data:", error);
+                console.log("Error fetching user data:", error);
                 reject(JSON.stringify({message:"unauthorized",success:false}));
             });
         });   
     } catch (error) {
-        //console.log(error);
+        console.log(error);
         return new NextResponse().json({message:"unauthorized",success:false})      
     }
 }
@@ -34,7 +34,7 @@ const generateToken = async (user) => {
         phoneNumber:phone_number,
         uid,
     }
-    await admin.firestore().collection('Subscription').doc(phone_number).get().then((doc)=>{
+    await admin.firestore().collection('SubscribedUsers').doc(phone_number).get().then((doc)=>{
         if(doc.exists) {
             tokenData.subscription = doc.data();
         }

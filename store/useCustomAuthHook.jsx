@@ -1,6 +1,6 @@
 "use client"
 import { useUserStore } from '@/store/userStore'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { auth } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -13,8 +13,10 @@ export function useCustomAuth(query) {
         loggeduser: state.user,
         setUser: state.setUser
     }));
+
     React.useEffect(() => {
         if (loggeduser != null) {
+            if(loggeduser.displayName==null) router.push('/auth/signup')
             if (query != '/') router.push(query);
             if(query =='/') router.push('/home')
             return;
@@ -32,18 +34,19 @@ export function useCustomAuth(query) {
                     const data = await res.json();
                     if (data.success) {
                         setUser({ ...user, subscription: data.subscription });
-                        if (query !== '/') router.push(query);
-                        if(query =='/') router.push('/home')
+                        if(user.displayName==null) router.push('/auth/signup')
+                        else if (query !== '/') router.push(query);
+                        else if(query =='/') router.push('/home')
                     } else {
                         setUser(null);
-                        router.push('/login');
+                        router.push('/auth/login');
 
                     }
                 });
 
             } else {
                 setUser(null);
-                if (query != '/') router.push('/login');
+                if (query != '/') router.push('/auth/login');
             }
         });
     }, []);

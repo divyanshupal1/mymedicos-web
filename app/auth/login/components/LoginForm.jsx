@@ -21,13 +21,14 @@ import { ChevronLeft } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { useCustomAuth } from '@/store/useCustomAuthHook';
+import Link from 'next/link';
 
 
 const LoginForm = () => {
 
-    const router = useRouter()
+    const users = useCustomAuth('/home')
 
-    const setUser = useUserStore(state=>state.setUser)
+    const {setUser,user} = useUserStore(state=>({setUser:state.setUser,user:state.user}))
 
     const {toast} = useToast()
     const [step, setStep] = React.useState(1)
@@ -41,14 +42,12 @@ const LoginForm = () => {
             let newCaptcha = new RecaptchaVerifier(auth,'recaptcha', {
                 'size': 'invisible',
                 'callback': (response) => {
-                // reCAPTCHA solved, allow signInWithPhoneNumber.
-                // ...
+
                 }
             })
             setCaptcha(()=>newCaptcha)
             return newCaptcha
     }
-
 
     const onSignInSubmit = async (e) => {
         e.preventDefault()
@@ -64,7 +63,6 @@ const LoginForm = () => {
             setStep(2)
             setLoading(false)
         }).catch((error) => {
-            //console.log(error);
             toast({
                 title: 'OTP not sent',
                 variant:"destructive"
@@ -79,17 +77,7 @@ const LoginForm = () => {
         let confirmationResult = window.confirmationResult;
         confirmationResult.confirm(code).then((result) => {
             const user = result.user;            
-            fetch('/api/auth/login',{
-                method:'POST',
-                body:JSON.stringify({user:user}),
-            }).then(async(res)=>{
-                const data = await res.json()
-                if(data.success){
-                    setUser({...user,subscription:data.subscription})
-                    router.push('/home')
-                }
-                setLoading(false)
-            })   
+            setUser({...user})
         })
         .catch((error) => {
             console.error("Error: ",error);
@@ -101,11 +89,7 @@ const LoginForm = () => {
             setLoading(false)
         });
     }
-
-    const user = useCustomAuth('/home')
-
-
-
+    
     return (        
         <>
         {
@@ -138,7 +122,7 @@ const LoginForm = () => {
             </form>
             <p className='text-center text-xs mt-5'>By Clicking, I accept the terms of service and privacy policy</p>
 
-            <p className='text-sm mt-[80px]'>Don’t have an account? <span className='text-primary font-semibold'>Sign Up</span></p>
+            <p className='text-sm mt-[80px]'>Don’t have an account? <Link href="/auth/signup"><span className='text-primary font-semibold'>Sign Up</span></Link></p>
         </div>}
         <div id="recaptcha"></div>
         {

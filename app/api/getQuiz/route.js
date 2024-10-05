@@ -3,9 +3,18 @@ import { Description } from "@radix-ui/react-toast";
 import { decode } from 'jsonwebtoken'
 import { NextResponse } from "next/server";
 
+
+const quizToPlan = {
+    'Free':'BASIC',
+    'Standard':'STANDARD',
+    'Premium':'PREMIUM',
+    'Pro':'PRO'
+}
+const plan = ['ALL','BASIC','STANDARD','PREMIUM','PRO']
 const hyOptions = ['Standard','Premium','Pro']
-const plans = {
-    'pgneet':'PGNEET'
+const plansSection = {
+    'pgneet':'PGNEET',
+    'fmge':'FMGE'
 }
 const collections = {
     'pgneet':"PGupload",
@@ -16,6 +25,18 @@ const categories = {
     'cwt':'CWT',
     'gt':'Weekley'
 }
+
+// {
+//     FMGE: {
+//     Duration: '6',
+//     Plan: 'PREMIUM',
+//     starting: '2024-10-01T17:18:47.779Z'        
+//   },
+//     PGNEET: {
+//     Duration: '6',
+//     Plan: 'STANDARD',
+//     starting: '2024-10-01T18:37:14.240Z'        
+//   }
 
 
 export async function GET(req, res) {
@@ -41,8 +62,14 @@ export async function GET(req, res) {
             .then(doc => {
                 quiz = doc.data()
         })
-        if(quiz.type!='Free' &&( subscription==null || subscription?.Field?.includes(plans[section])==-1 || hyOptions.indexOf(subscription.hyOption)<hyOptions.indexOf(quiz.hyOption))){
+        if(quiz.type!='Free' &&( subscription==null || Object.keys(subscription).includes(plansSection[section])==-1 || plan.indexOf(subscription[plansSection[section]])<plan.indexOf(quizToPlan[quiz.hyOption]))){
             return new NextResponse(JSON.stringify({message:"Upgrade Plan",success:false,code:2}))
+        }
+        let planStartingDate = new Date(subscription[plansSection[section]].starting)
+        planStartingDate.setMonth(planStartingDate.getMonth() + parseInt(subscription[plansSection[section]].Duration))
+        let dateNow = new Date()
+        if(planStartingDate < dateNow){
+            return new NextResponse(JSON.stringify({message:"Plan Expired",success:false,code:3}))
         }
         if(category=='gt'){
             quiz.Data = quiz.Data.map(data=>({...data,Correct:null,Description:null}))

@@ -8,6 +8,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import Autoplay from 'embla-carousel-autoplay'
+import { useCustomAuth } from "@/store/useCustomAuthHook"
 
 
 const items = [
@@ -35,49 +36,46 @@ const items = [
     action :"/fmge",
     for:"fmge"
   },
-  {
-    title:["Streamline Your ","NEET SS"," Prep for Outstanding Results"],
-    description:"We simplify, enhance, and make your NEET PG preparation enjoyable and engaging with our all-inclusive 3600 learning solution.",
-    points:["Expert-reviewed Qbank","Comprehensive grand tests","Focused topic tests","Rapid Revision Program (RRP)"],
-    card:{
-      title:"NEET SS",
-      points:["3 test series ","1 Grandtest ","Unlimited Practice MCQS","3 test series ","Unlimited Practice MCQS"],
-      price:8000,
-    },
-    action :"/neetss",
-    for:"neetss"
-  },
+  // {
+  //   title:["Streamline Your ","NEET SS"," Prep for Outstanding Results"],
+  //   description:"We simplify, enhance, and make your NEET PG preparation enjoyable and engaging with our all-inclusive 3600 learning solution.",
+  //   points:["Expert-reviewed Qbank","Comprehensive grand tests","Focused topic tests","Rapid Revision Program (RRP)"],
+  //   card:{
+  //     title:"NEET SS",
+  //     points:["3 test series ","1 Grandtest ","Unlimited Practice MCQS","3 test series ","Unlimited Practice MCQS"],
+  //     price:8000,
+  //   },
+  //   action :"/neetss",
+  //   for:"neetss"
+  // },
 ]
 
 export function HomeCaraousel() {
   const [api, setApi] = React.useState()
-  const [current, setCurrent] = React.useState(0)
-  const [count, setCount] = React.useState(0)
-
   const [index, setIndex] = React.useState(0)
 
-  const scrollTo = (index) => {
-      if(!api) return
-      api.scrollTo(index)
-  }
-
-  const setApiChange = (api) => {
-      setApi(api)
-      api?.on('slidesInView', () => {
-          setIndex(api.slidesInView()[0])
-      })
-  }
+  const user = useCustomAuth('/home')
 
 
-  React.useEffect(() => {
-    if (!api) {
-      return
-    }
+  // const setApiChange = (api) => {
+  //     setApi(api)
+  //     api?.on('slidesInView', () => {
+  //         setIndex(api.slidesInView()[0])
+  //     })
+  // }
 
-  }, [api])
+
+  // React.useEffect(() => {
+  //   if (!api) {
+  //     return
+  //   }
+
+  // }, [api])
 
   return (
-    <Carousel setApi={setApiChange}  opts={{loop:true}} plugins={[Autoplay({delay:5000})]} className="w-full h-auto">
+    <Carousel 
+    // setApi={setApiChange}  
+    opts={{loop:true}} plugins={[Autoplay({delay:5000})]} className="w-full h-auto">
       <CarouselContent>
           {
             items.map((item, index) => <CarouselItem key={index}> <NeetPgItem item={item}/> </CarouselItem> )

@@ -1,21 +1,24 @@
 import { decode } from 'jsonwebtoken'
 import { NextResponse } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
+
+
 export default async function middleware(request) {
   const token = request.cookies.get('authtoken')?.value
-  const path = request.nextUrl.pathname.split('/') 
-  //console.log(request.nextUrl.pathname)
+  // const path = request.nextUrl.pathname.split('/') 
 
   if (!token) {
     return NextResponse.redirect(new URL('/login',request.nextUrl))
   }
   let decoded = decode(token)
+  if(!decoded) {
+    return NextResponse.redirect(new URL('/login',request.nextUrl))
+  }
+
   let subscription = decoded.subscription
+  // console.log(subscription)
   
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
     '/home/:path*',
@@ -25,5 +28,6 @@ export const config = {
     '/pgneet/:path*',
     '/profile/:path*',
     '/api/getQuiz/:path*',
+    '/api/utility/:path*',
   ],
 }

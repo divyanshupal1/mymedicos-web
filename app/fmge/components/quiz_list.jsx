@@ -4,7 +4,13 @@ import QuizCard from './quiz_card'
 import { useParams } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 
-const tabs = ['All','Basic','Standard','Premium','Pro']
+const tabs = ['ALL','BASIC','STANDARD','PREMIUM','PRO']
+const quizToPlan = {
+    'Free':'BASIC',
+    'Standard':'STANDARD',
+    'Premium':'PREMIUM',
+    'Pro':'PRO'
+}
 
 const QuizList = ({quizes,section,category}) => {
     
@@ -15,14 +21,14 @@ const QuizList = ({quizes,section,category}) => {
     quizes = JSON.parse(quizes)
 
     const quizData = {
-        'All':quizes,
-        'Basic':quizes.filter(quiz => quiz.type == 'Free'),
-        'Standard':quizes.filter(quiz => quiz.hyOption == 'Standard'),
-        'Premium':quizes.filter(quiz => quiz.hyOption == 'Premium'),
-        'Pro':quizes.filter(quiz => quiz.hyOption == 'Pro')
+        'ALL':quizes,
+        'BASIC':quizes.filter(quiz => quiz.type == 'Free'),
+        'STANDARD':quizes.filter(quiz => quiz.hyOption == 'Standard'),
+        'PREMIUM':quizes.filter(quiz => quiz.hyOption == 'Premium'),
+        'PRO':quizes.filter(quiz => quiz.hyOption == 'Pro')
     }
 
-    const allowed = tabs.indexOf(user?.subscription?.hyOption) || 1
+    const allowed = tabs.indexOf(user?.subscription?.FMGE?.Plan) || 1
 
     return (
         <>
@@ -40,7 +46,7 @@ const QuizList = ({quizes,section,category}) => {
                 ))
             }
         </div>
-        <div className='subjects w-full mt-8 flex gap-x-2 flex-wrap gap-y-2 max-lg:justify-center'>
+        <div className='subjects w-full mt-8 flex gap-x-2 flex-wrap gap-y-2 max-lg:justify-center px-3'>
                     {
                         quizData[tabs[tab]].length == 0 && <div className='text-lg text-neutral-500 text-center w-full'>No quizes found</div>
                     }
@@ -52,7 +58,7 @@ const QuizList = ({quizes,section,category}) => {
                                 category={category}
                                 speciality={speciality} 
                                 quiz={quiz} 
-                                locked={tabs.indexOf(quiz.hyOption)>allowed}
+                                locked={tabs.indexOf(quizToPlan[quiz.hyOption])>allowed}
                             />
                         ))
                     }
