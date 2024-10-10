@@ -11,7 +11,7 @@ const quizToPlan = {
     'Pro':'PRO'
 }
 const plan = ['ALL','BASIC','STANDARD','PREMIUM','PRO']
-const hyOptions = ['Standard','Premium','Pro']
+const hyOptions = ['All','Basic','Standard','Premium','Pro']
 const plansSection = {
     'pgneet':'PGNEET',
     'fmge':'FMGE'
@@ -41,8 +41,8 @@ const categories = {
 
 export async function GET(req, res) {
     const token = req.cookies.get('authtoken').value
-    let {subscription,uid} = decode(token)    
-
+    let {subscription,uid} = decode(token)  
+    console.log(subscription)
     const searchParams = req.nextUrl.searchParams
     const section = searchParams.get('section')
     const category = searchParams.get('category')
@@ -62,14 +62,22 @@ export async function GET(req, res) {
             .then(doc => {
                 quiz = doc.data()
         })
-        if(quiz.type!='Free' &&( subscription==null || Object.keys(subscription).includes(plansSection[section])==-1 || plan.indexOf(subscription[plansSection[section]])<plan.indexOf(quizToPlan[quiz.hyOption]))){
+        if(quiz.type!='Free' &&
+            ( 
+                subscription==null || 
+                Object.keys(subscription).includes(plansSection[section])==-1 || 
+                plan.indexOf(subscription[plansSection[section]].Plan)<hyOptions.indexOf(quiz.hyOption)
+            )
+        ){
             return new NextResponse(JSON.stringify({message:"Upgrade Plan",success:false,code:2}))
         }
-        let planStartingDate = new Date(subscription[plansSection[section]].starting)
-        planStartingDate.setMonth(planStartingDate.getMonth() + parseInt(subscription[plansSection[section]].Duration))
-        let dateNow = new Date()
-        if(planStartingDate < dateNow){
-            return new NextResponse(JSON.stringify({message:"Plan Expired",success:false,code:3}))
+        if(quiz.type!="Free"){
+            let planStartingDate = new Date(subscription[plansSection[section]].starting)
+            planStartingDate.setMonth(planStartingDate.getMonth() + parseInt(subscription[plansSection[section]].Duration))
+            let dateNow = new Date()
+            if(planStartingDate < dateNow){
+                return new NextResponse(JSON.stringify({message:"Plan Expired",success:false,code:3}))
+            }
         }
         if(category=='gt'){
             quiz.Data = quiz.Data.map(data=>({...data,Correct:null,Description:null}))
@@ -107,7 +115,7 @@ export async function GET(req, res) {
 
     }
     catch(err){
-        //console.log(err)
+        console.log(err)
         return new NextResponse(JSON.stringify({message:"Something wrong"}))
     }
 }

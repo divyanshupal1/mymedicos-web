@@ -214,7 +214,7 @@ export default TestPage
 const parseQuizData = (data) => {
     let quiz=JSON.parse(data)
     const questions = {}
-    quiz.Data.map((question)=>{
+    quiz?.Data?.map((question)=>{
         questions[question.number] = question
     })
     return {questions,total:Object.keys(questions).length,quiz}

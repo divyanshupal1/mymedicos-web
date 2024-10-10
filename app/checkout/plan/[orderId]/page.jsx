@@ -16,7 +16,7 @@ function Page({ params }) {
     const [status,setStatus] = React.useState(null);
 
     React.useEffect(() => {
-        axios.get(`${FRONTEND_HOST}/api/plans/details/${params.orderId}`).then((res) => {
+        axios.get(`/api/plans/details/${params.orderId}`).then((res) => {
             setResult(res.data);
         })
     },[params.orderId,status])
@@ -61,7 +61,7 @@ function Page({ params }) {
             "description": `Order for ${result.user}`,
             "order_id": order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-                axios.post(`${FRONTEND_HOST}/api/plans/callback/`, {
+                axios.post(`/api/plans/callback/`, {
                     "razorpay_payment_id": response.razorpay_payment_id,
                     "razorpay_order_id": response.razorpay_order_id,
                     "razorpay_signature": response.razorpay_signature,
