@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 import TestPage from '@/components/testpage/testpage'
 import LoadingScreen from '@/components/ui/loading-screen'

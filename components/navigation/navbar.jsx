@@ -20,6 +20,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 import { HiMenuAlt3 } from "react-icons/hi";
+import { WiStars } from "react-icons/wi";
 
 const links = [
     {sub:false,name:'Home',href:"/home"},
@@ -76,6 +77,17 @@ export const Navbar = () => {
                 {   
                     path[1]!== '' && 
                     <div className='grow-0 flex items-center gap-x-6'>
+                        {/* <Link href={"/ppt"}>
+                        <div className=' p-2 rounded-full px-4 shadow-md bg-violet-500 text-white cursor-pointer relative'>
+                            <span>AI PPT Generator</span>
+                            <div className='absolute top-0 right-0'>
+                                <div className='w-full h-full relative animate-pulse'>
+                                    <span className='absolute top-0 right-0 scale-[3] text-[#FFD700]'><WiStars/></span>
+                                    <span className='absolute top-0 right-0 scale-[3] text-[#FFD700] blur-[2px]'><WiStars/></span>
+                                </div>
+                            </div> 
+                        </div>
+                        </Link> */}
                         <ProfileButton/>
                         <div className='hidden max-mmd:block'><SideBar/></div>
                     </div>
@@ -166,7 +178,7 @@ const ProfileButton = () => {
                     <div className='flex items-center gap-x-2 rounded-full'>
                         <Avatar className="w-8 h-8">
                             <AvatarImage src={loggeduser.photoURL} />
-                                <AvatarFallback>{loggeduser.displayName.substring(0,2).toUpperCase()}</AvatarFallback>
+                                <AvatarFallback>{loggeduser?.displayName?.substring(0,2).toUpperCase()}</AvatarFallback>
                             </Avatar>
                         </div>
                     </DropdownMenuTrigger>

@@ -170,7 +170,7 @@ const TestPage = ({quizData,category,section}) => {
                     </div>
                 </div>
             </div>
-            <div className='w-8/12 max-lg:w-full max-lg:min-h-screen  max-lg:overflow-y-scroll h-full flex flex-col p-2 max-lg:scroll-hide'>
+            <div className='w-8/12 bg-red-50 max-lg:w-full max-lg:min-h-screen  max-lg:overflow-y-scroll h-full flex flex-col p-2 max-lg:scroll-hide'>
                 <div className='font-semibold text-lg mt-2'>Question Number: {currentQuestion+1}</div>
                 <div className='pt-4'>
                     <div className='text-lg font-semibold'>{questions[currentQuestion].Question}</div>
@@ -199,7 +199,7 @@ const TestPage = ({quizData,category,section}) => {
                         <div className='p-3 mt-2 bg-neutral-50 rounded-lg mb-16' dangerouslySetInnerHTML={{__html:questions[currentQuestion].Description}}></div>
                     </div>
                 }
-                <div className='flex gap-x-2 sticky bottom-2 mt-auto  w-full justify-between'>
+                <div className='flex gap-x-2 sticky bottom-2 mt-2  w-full justify-between'>
                         <Button onClick={handlePrev} ><span><ChevronLeft/></span> Previous</Button>
                         <Button onClick={handleNext} disabled={currentQuestion==questions.total-1}>Next <span><ChevronRight/></span></Button>
                 </div>
