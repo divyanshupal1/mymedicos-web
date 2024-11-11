@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/navigation/navbar";
 import { cn } from "@/lib/utils";
+import Doubt from "@/components/doubt/doubt";
 
 const inter = Inter({ subsets: ["latin"] });
 
