@@ -1,17 +1,29 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import { useChatStore } from '@/store/chatStore'
+import { useUserStore } from '@/store/userStore'
 import { ChevronLeft } from 'lucide-react'
 import React from 'react'
 import { MdChat, MdClose, MdSend } from 'react-icons/md'
 
 const Doubt = () => {
-    const [show, setShow] = React.useState(true)
-    const {activeChatId,setActiveChatId} = useChatStore(state=>state)
+    const [show, setShow] = React.useState(false)
+    const {activeChatId,setActiveChatId,dataloaded,loadChatData} = useChatStore(state=>({
+        activeChatId:state.activeChatId,
+        setActiveChatId:state.setActiveChatId,
+        dataloaded:state.dataloaded,
+        loadChatData:state.loadChatData
+    }))
+    const {user} = useUserStore(state=>state)
 
     const close = () => {
         setShow(false)
         setActiveChatId(null)
     }
+
+    React.useEffect(()=>{
+        if(!dataloaded) loadChatData(user)
+    },[dataloaded,loadChatData,user])
 
     return (
         <>
@@ -39,6 +51,7 @@ export default Doubt
 
 const DoubtSidebar = ({close}) => {
     const {chats,activeChatId} = useChatStore(state=>state)
+    console.log(chats)
     return (
         <>
             <div className='flex gap-x-3 items-center justify-start h-[60px] px-4  bg-neutral-100 border-b border-neutral-200'>
@@ -58,12 +71,13 @@ const DoubtSidebar = ({close}) => {
 
 const ChatItem = ({chat,active}) => {
     const {setActiveChatId,chats} = useChatStore(state=>state)
+    const {user} = useUserStore(state=>state)
     return (
         <div 
-            onClick={()=>setActiveChatId(chat.id)}
+            onClick={()=>setActiveChatId(user,chat.id)}
             className={`w-full p-4 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis relative flex-shrink-0 ${active?'bg-[#2BD0BF] text-white shadow-sm':''}`}
         >
-            {chat?.name}
+            {chat?.mentor?.name || chat?.name}
             {chats?.new?.includes(chat.id) && <div className=' px-2 bg-green-500 rounded-full absolute right-4 top-1/2 -translate-y-1/2'>new message</div>}
         </div>
     )
@@ -89,7 +103,7 @@ const ChatNavbar =  ({close}) => {
     return (
         <div className='w-full h-[60px] border-b border-neutral-200 bg-[#2BD0BF] sticky top-0  z-10 flex items-center justify-between px-3'>
             <div className='flex items-center gap-x-3 w-full'>
-                <div className='rounded-full p-2 bg-neutral-100/50 md:hidden ' onClick={()=>setActiveChatId(null)}><ChevronLeft/></div>
+                <div className='rounded-full p-2 bg-neutral-100/50 md:hidden cursor-pointer ' onClick={()=>setActiveChatId("null",null)}><ChevronLeft/></div>
                 <span className='overflow-hidden whitespace-nowrap text-ellipsis max-w-md'>{chat?.name}</span>
             </div>
             <div className='absolute right-3 top-1/2 -translate-y-1/2'>
@@ -100,27 +114,27 @@ const ChatNavbar =  ({close}) => {
 }
 
 const MessagesDisplay = () => {
-    const {activeChatId,messages} = useChatStore(state=>state)
+    const {activeChatId,messages,unsubscribe,subscribeToChat} = useChatStore(state=>state)
+    const {user} = useUserStore(state=>state)
     const messageContainer = React.useRef(null)
 
     React.useEffect(()=>{
         messageContainer.current.scrollTop = messageContainer.current.scrollHeight
     }, [messages,activeChatId])
 
+    React.useEffect(()=>{
+        let unsubscribe= null
+        if(activeChatId){
+            unsubscribe = subscribeToChat(user,activeChatId)
+        }
+        return ()=>unsubscribe()
+    },[activeChatId,unsubscribe,subscribeToChat,user])
+
     if(activeChatId==null) return <></>
+    console.log(messages[activeChatId])
 
     return (
         <div ref={messageContainer} className='px-4 py-20 max-h-full w-full overflow-y-scroll custom-scroll absolute bottom-0'>
-                {
-                    messages[activeChatId]?.map((message,i)=>
-                        <MessageItem key={i} message={message}/>
-                    )
-                }
-                {
-                    messages[activeChatId]?.map((message,i)=>
-                        <MessageItem key={i} message={message}/>
-                    )
-                }
                 {
                     messages[activeChatId]?.map((message,i)=>
                         <MessageItem key={i} message={message}/>
@@ -143,11 +157,17 @@ const MessageItem = ({message}) => {
 const MessageSend = () => {
     const {activeChatId} = useChatStore(state=>state)
     const [message, setMessage] = React.useState('')
+
+    const {sendMessage} = useChatStore(state=>state)
+    const {user} = useUserStore(state=>state)
+
     const handleOnSubmit = (e) => {
         e.preventDefault()
         console.log(message)
+        sendMessage(user,activeChatId,message)
         setMessage('')
     }
+
     if(activeChatId==null) return <></>
     return (
         <form onSubmit={handleOnSubmit} className='w-[calc(100%-50px)] absolute bottom-2  left-1/2 -translate-x-1/2 '>

@@ -20,7 +20,7 @@ const PgNeetLayout = ({ children }) => {
 
     return (
         <>
-        {/* <Doubt /> */}
+        <Doubt />
         <div className='w-full h-auto flex relative'>
             <Sidebar />
             <div className=' w-full h-auto'>

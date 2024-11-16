@@ -1,147 +1,56 @@
 import { create } from "zustand";
 import { db } from "@/lib/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc,onSnapshot,query,where, arrayRemove,updateDoc, collection, doc, getDoc, getDocs, arrayUnion, serverTimestamp, orderBy } from "firebase/firestore";
 
 
 
 
 export const useChatStore = create((set) => ({
-    messages : {
-        "chatone":[
-                {
-                    id:"1",
-                    sender:"user",
-                    message:"Hello fsdhfs sdjofijsdio sfdoisdfj sdjofsidjf lorem ipsum dolor sit amet lorem fsjlk fsdjf s fosidfjois fsodjifis dfosijdfoisjdf sodifjiosjdf iosd fdsjopfiosdjfoi sfjodsijfios dfjsdoifj siod"
-                },
-                {
-                    id:"2",
-                    sender:"mentor",
-                    message:"Hi"
-                },
-                {
-                    id:"3",
-                    sender:"user",
-                    message:"How are mentor?"
-                },
-                {
-                    id:"4",
-                    sender:"mentor",
-                    message:"I am fine"
-                },
-                {
-                    id:"5",
-                    sender:"user",
-                    message:"What are mentor doing?"
-                },
-                {
-                    id:"6",
-                    sender:"mentor",
-                    message:"Nothing much"
-                },
-                {
-                    id:"7",
-                    sender:"user",
-                    message:"Ok"
-                }
-        ],
-        "chattwo":[
-                {
-                    id:"1",
-                    sender:"user",
-                    message:"Hello"
-                },
-                {
-                    id:"2",
-                    sender:"mentor",
-                    message:"Hi"
-                },
-                {
-                    id:"3",
-                    sender:"user",
-                    message:"How are mentor?"
-                },
-                {
-                    id:"4",
-                    sender:"mentor",
-                    message:"I am fine"
-                },
-                {
-                    id:"5",
-                    sender:"user",
-                    message:"What are mentor doing?"
-                },
-                {
-                    id:"6",
-                    sender:"mentor",
-                    message:"Nothing much"
-                },
-                {
-                    id:"7",
-                    sender:"user",
-                    message:"Ok"
-                }
-            ],
-    },
-    chats:{
-        all:[
-            {
-                id:"chatone",
-                name:"this is the doubt related to this topic of fmge medical exam sdfd dsffs dsd fsd sdfsdf",
-                start:"12:00",
-                mentor:"mentor 1",
-                completed:false
-            },
-            {
-                id:"chattwo",
-                name:"Chat Two",
-                start:"12:00",
-                mentor:"mentor 2",
-                completed:false
-            },
-            {
-                id:"chatthree",
-                name:"Chat Three",
-                start:"12:00",
-                mentor:"mentor 3",
-                completed:false
-            },
-            {
-                id:"chatfour",
-                name:"Chat Four",
-                start:"12:00",
-                mentor:"mentor 4",
-                completed:false
-            },
-            {
-                id:"chatfive",
-                name:"Chat Five",
-                start:"12:00",
-                mentor:"mentor 5",
-                completed:false
-            }
-        ],
-        new:["chatthree","chatfour","chatfive"],        
-    },
+    messages : {},
+    chats:{},
     activeChatId : null,
-    setActiveChatId : (id) => set((state) => ({activeChatId:id})),
+    dataloaded:false,
+    loadChatData : async (user) => {
+        if(!user) return;
+        try{
+            onSnapshot(doc(db, "MentorChats",user.phoneNumber), (doc) => {
+                set((state) => ({chats:doc.data(),dataloaded:true}));
+            });
+            return true;
+        }catch(e){
+            console.log(e);
+            return false;
+        }
+    },
+    setActiveChatId : async (user,id) => {
+        if(!id) return;
+        try{
+            const updateNew = doc(db, "MentorChats",user.phoneNumber);
+            await updateDoc(updateNew, { new: arrayRemove(id) });
+            set((state) => ({activeChatId:id}));
+            return true;
+        }
+        catch(e){
+            console.log(e);
+            return false;
+        }
+    },
     sendMessage : async (user,chatId,message) => {
         if(!message || !chatId || !user) return;
         const newMessage = {
-            from:"user",
+            sender:"user",
             message:message,
-            time:Date.now()
+            time:serverTimestamp()
         }
         try{
-            const res = await addDoc(collection(db, "UserChats",user,chatId), newMessage);
-            console.log("Document written with ID: ", res.id);
+            const res = await addDoc(collection(db, "MentorChats",user.phoneNumber,chatId), newMessage);
+            let mentor = undefined;
             set((state) => {
-                const newMessages = state.messages[chatId].concat({
-                    id:res.id,
-                    sender:"user",
-                    message:message
-                });
-                return {messages:{...state.messages,[chatId]:newMessages}}
+                mentor = state.chats.all.find((chat) => chat.id === chatId).mentor;
+                return state;
             });
+            const updateNew = doc(db, "MentorAcceptedChats",mentor.id);
+            await updateDoc(updateNew, { new: arrayUnion(chatId) });
             return true;
         }
         catch(e){
@@ -152,14 +61,17 @@ export const useChatStore = create((set) => ({
     },
     subscribeToChat : (user,chatId) => {
         if(!user || !chatId) return;
-        const unsubscribe = onSnapshot(collection(db, "UserChats",user,chatId), (querySnapshot) => {
+        set((state) => ({messages:{...state.messages,[chatId]:[]}}));
+        const q = query(collection(db, "MentorChats",user.phoneNumber,chatId),orderBy("time","asc"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const messages = querySnapshot.docs.map((doc) => {
                 return {
                     id:doc.id,
                     ...doc.data()
                 }
             });
-            set((state) => ({messages:{...state.messages,[chatId]:messages}}));
+            // const messagesSorted = messages.sort((a,b) => a.time - b.time);
+            set((state) => ({messages:{...state.messages,[chatId]:[...messages]}}));
         });
         return unsubscribe;
     }

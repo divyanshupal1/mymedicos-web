@@ -16,7 +16,7 @@ export default function Home() {
         <div className='absolute -z-10 w-full h-full rotate-[-8deg] -translate-y-[25%] scale-x-150 bg-gradient-to-b from-[#93F2FF] to-[#00488A]/70'> </div>
         <div className='flex items-center justify-center gap-x-20 mx-auto mt-[20%] md:mt-[10%] w-screen h-auto p-5'>
           <div className='max-w-[621px]'>
-            <h6 className='text-3xl font-black text-[#064838]'>Learn Anywhere, Test Your Knowlegde With <span className='text-neutral-100'>Mymedicos</span></h6>
+            <h6 className='text-3xl font-black text-[#064838]'>Learn Anywhere, Test Your Knowlegde With <span className='text-neutral-100'>mymedicos</span></h6>
             <p className='text-[#444E55] mt-6'>Unlock your medical career with mymedicos, the top platform for NEET PG, FMGE, and NEET SS prep. Access unparalleled MCQ practice, high-yield grand tests, and comprehensive resources. Excel in your exams and achieve your professional dreams with mymedicos.</p>
             <div className='w-full mt-6 flex justify-center'>
               <Button className=" bg-[#3C4852] hover:bg-[#3C4852]/50 min-w-[150px] mx-auto">Get Started</Button>
