@@ -35,25 +35,13 @@ const buttonVariants = cva(
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Button = React.forwardRef(
-  ({ className, variant, size,onClick,children,loading=false, asChild = false, ...props }, ref) => {
+  ({ className, variant, size,children,loading=false, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
-    const [clicked, setClicked] = React.useState(false);
-    React.useEffect(() => {
-      if (!clicked) return;
-      const timer = setTimeout(() => {
-        setClicked(false);
-      }, 70);
-      return () => clearTimeout(timer);
-    }, [clicked]);
     return (
       <button
-        className={cn(buttonVariants({ variant, size,clicked, className }))}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-        onClick={(e)=>{
-          setClicked(!clicked);
-          onClick && onClick(e);
-        }}
         disabled={loading||props?.disabled}
       > 
         <div className="flex items-center justify-center gap-x-3 w-full">

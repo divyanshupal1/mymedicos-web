@@ -23,10 +23,11 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { WiStars } from "react-icons/wi";
 
 const links = [
-    {sub:false,name:'Home',href:"/home"},
+    // {sub:false,name:'Home',href:"/home"},
     // {sub:false,name:'MBBS',href:"/mbbs"},
-    {sub:false,name:'PG NEET',href:"/pgneet"},
-    {sub:false,name:'FMGE',href:"/fmge"},
+    // {sub:false,name:'PG NEET',href:"/pgneet"},
+    // {sub:false,name:'FMGE',href:"/fmge"},
+    // {sub:false,name:'Exclusive',href:"/exclusive"},
     // {sub:false,name:'NEET SS',href:"/neetss"},
     // {   
     //     sub:true,
@@ -62,7 +63,7 @@ export const Navbar = () => {
                     path[1]!== '' && 
                     <div className='flex items-center justify-evenly gap-x-6 w-auto flex-grow max-w-4xl'>
                         <div className='max-w-xs max-llg:hidden max-mmd:block max-sm:hidden '>
-                            <SearchBar/>
+                            {/* <SearchBar/> */}
                         </div>
                         <ul className='space-x-2 max-mmd:hidden'>
                             {
@@ -89,7 +90,7 @@ export const Navbar = () => {
                         </div>
                         </Link> */}
                         <ProfileButton/>
-                        <div className='hidden max-mmd:block'><SideBar/></div>
+                        {/* <div className='hidden max-mmd:block'><SideBar/></div> */}
                     </div>
                 }
                 {
@@ -101,7 +102,7 @@ export const Navbar = () => {
                 }
             </div>
             { path[1]!== '' && path.length<=2 && <div className={`h-16 hidden max-llg:flex max-mmd:hidden max-sm:flex justify-center p-2 ${path.length>2 ? "hidden":""}`}>
-                <SearchBar className={"max-w-[800px]"}/>
+                {/* <SearchBar className={"max-w-[800px]"}/> */}
             </div> }           
         </nav>
         

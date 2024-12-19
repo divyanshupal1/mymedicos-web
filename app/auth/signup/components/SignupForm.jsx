@@ -104,8 +104,8 @@ const SignupForm = () => {
             DocID:userDoc.docs[0].id
           })
           setLoading(false)
-          router.push('/home')
         }
+        router.push('/home')
         toast({
           title:"Signup Success",
         })

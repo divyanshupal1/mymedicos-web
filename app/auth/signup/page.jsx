@@ -9,7 +9,7 @@ const SignUpPage = () => {
   const router = useRouter()
   const user = useUserStore(state=>state.user)
   if(user==null) router.push('/auth/login')
-  if(user?.displayName!=null){
+  if(user?.displayName!=null && user?.doc!==null){
     router.push('/home')
   }
   return (

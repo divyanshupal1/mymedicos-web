@@ -12,8 +12,8 @@ export async function POST(req) {
                 if(userRecord.uid !== uid) {
                     reject("User not found");
                 }
-                const {token,subscription} = await generateToken(userRecord);
-                const response = new NextResponse(JSON.stringify({message:"authorized",success:true,subscription}),{status:200});
+                const {token,subscription,doc} = await generateToken(userRecord);
+                const response = new NextResponse(JSON.stringify({message:"authorized",success:true,subscription,doc}),{status:200});
                 response.cookies.set("authtoken", token)
                 resolve(response);
             }).catch((error) => {
@@ -42,8 +42,11 @@ const generateToken = async (user) => {
             tokenData.subscription = null;
         }
     })
+    await admin.firestore().collection('users').where("Phone Number","==",phone_number).get().then(doc=>{
+        tokenData.doc = doc.docs[0]?.data() || null
+    })
     const token = sign(tokenData, process.env.SECRET, {
         expiresIn: "1d",
     });
-    return {token,subscription:tokenData.subscription};   
+    return {token,subscription:tokenData.subscription,doc:tokenData.doc};   
 }
