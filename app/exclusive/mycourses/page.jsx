@@ -23,6 +23,7 @@ const MyCoursesPage = async () => {
       <h1 className='text-xl font-semibold p-5'>Your Courses</h1>
       <div className='w-full flex flex-wrap gap-4 p-4'>
         {
+          courseDetails.length === 0 ? <div className='w-full h-[500px] flex items-center justify-center font-medium text-lg'>No courses found</div> :
           courseDetails.map((course, index) => (
             <CourseCard key={index} mycourse courseData={JSON.stringify(course)} />
           ))

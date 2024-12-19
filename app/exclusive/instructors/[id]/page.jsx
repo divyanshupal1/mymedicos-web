@@ -33,7 +33,7 @@ const InstructorDetails = async ({params}) => {
         </div>
         <div className='flex flex-wrap gap-4 mt-5 p-5'>
             {
-                courses.map(course => <CourseCard key={course.id} courseData={JSON.stringify(course)}/>)
+               courses.length>0 ? courses.map(course => <CourseCard key={course.id} courseData={JSON.stringify(course)}/>) : <div className='w-full h-[500px] flex items-center justify-center font-medium text-lg'>No courses found</div>
             }
         </div>
     </div>

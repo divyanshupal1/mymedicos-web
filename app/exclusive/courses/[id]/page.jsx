@@ -6,7 +6,7 @@ import { IoAdd } from 'react-icons/io5'
 
 import {OverviewSkeleton} from "../../components/course-overview-skeleton";
 import dynamic from "next/dynamic";
-import SWGTQuizes from './swgt';
+
 
 const CourseOverview = dynamic(() => import("../../components/course-overview"),{
     loading: () => <OverviewSkeleton/>
