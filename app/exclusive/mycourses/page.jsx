@@ -9,9 +9,9 @@ const MyCoursesPage = async () => {
   if(error || !token) permanentRedirect('/login')
   
   const subscriptions = await admin.firestore().collection('SubscribedUsers').doc(token.phoneNumber).get()
-  const courses = subscriptions.data().Exclusive
+  const courses = subscriptions.data()?.Exclusive
 
-  const exclusiveIds = Object.keys(courses)
+  const exclusiveIds = Object.keys(courses||{})
 
   const courseDetails = await Promise.all(exclusiveIds.map(async (id) => {
     const doc = await admin.firestore().collection('Exclusive_Course').doc(id).get()
