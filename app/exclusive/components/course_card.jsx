@@ -6,7 +6,7 @@ import React from 'react'
 
 const CourseCard = ({courseData,mycourse}) => {
     const course = JSON.parse(courseData)
-    console.log(course)
+    //console.log(course)
     return (
         <div className="max-w-sm bg-card min-w-sm grow px-4 pt-4 pb-1 rounded-xl shadow-lg transform hover:scale-105 transition duration-500 relative border">
             {/* <h3 className="mb-3 text-xl font-semibold text-cyan-700">{course.name}</h3> */}
@@ -43,7 +43,7 @@ export default CourseCard
 const CourseValidation = ({ subscription }) => {
     const startDate = new Date(subscription.starting);
     const today = new Date();
-    startDate.setMonth(startDate.getMonth() + subscription.Duration);
+    startDate.setMonth(startDate.getMonth() + parseInt(subscription.Duration));
 
     const isExpired = startDate < today;
 

@@ -38,11 +38,11 @@ const Test = () => {
       })
       .then(res => res.json())
       .then(data => {
-          console.log(data)
+          //console.log(data)
           if(data.success){
             setQuiz(data.data)
             setLoading(false)
-            //console.log(data.data)
+            ////console.log(data.data)
           }
           else{
             setCode(data.code)

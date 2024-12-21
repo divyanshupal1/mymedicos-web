@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Doubt from "@/components/doubt/doubt";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { GoogleTagManager } from '@next/third-parties/google'
+import UserObserver from "@/components/navigation/user_observer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={cn(inter.className,"overflow-x-hidden min-h-screen")}>
         <GoogleTagManager gtmId="GTM-T8MN5ZTC" />
+        <UserObserver/>
         <div className="w-full h-screen flex flex-col items-start justify-start">
             <Navbar/>
             <div id="main-data" className="w-full h-full overflow-y-scroll">

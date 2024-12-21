@@ -3,6 +3,21 @@
 import { decodeToken } from "./lib/getDecodedToken"
 import admin from "./lib/firebase_admin"
 
+export const getLoggedInUser = async () => {
+    const {token,error} = decodeToken()
+    if(error || !token) return {error:"Invalid Token",code:401,success:false}
+
+    const uid = token.phoneNumber
+    try{
+        const user = await admin.firestore().collection('users').where('Phone Number','==',uid).get()
+        const userDoc = user.docs[0]
+        return {data:userDoc.data(),code:200,success:true}
+    }
+    catch(e){
+        return {error:e.message,code:500,success:false}
+    }
+}
+
 export const saveProgress = async (course,quiz,type,progress) => {
     const {token,error} = decodeToken()
     if(error || !token) return {error:"Invalid Token",code:401,success:false}

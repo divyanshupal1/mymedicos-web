@@ -14,16 +14,16 @@ const InstructorDetails = async ({params}) => {
 
   return (
     <div className='mt-3'>
-        <div className='flex flex-col gap-4 relative'>
+        <div className='flex flex-col justify-center items-center relative'>
             <img className='w-full min-h-[200px] aspect-[7/1] object-cover' src='https://images.pexels.com/photos/1107717/pexels-photo-1107717.jpeg?cs=srgb&dl=pexels-fotios-photos-1107717.jpg&fm=jpg' alt='cover-image'/>
 
-            <div className='absolute flex justify-start items-end top-[70%] left-1/2 transform -translate-x-1/2  rounded-lg  w-full max-w-[1200px]'>
-                <div className='w-[200px] aspect-square rounded-full overflow-hidden border-[8px] border-white'>
-                    <img src={instructor.Profile} alt={instructor.Name} className='w-full h-auto'/>
-                </div>
-                <div className='w-3/4 p-5'>
-                    <h1 className='text-2xl font-medium'>{instructor.Name}</h1>
-                    <p className='text-lg max-w-[800px]'>{instructor.Bio}</p>
+            <div className=' max-w-[1200px]  w-full'>
+                <div className='flex items-end justify-start  w-full'>
+                    <img src={instructor.Profile} alt={instructor.Name} className='relative  -mt-[80px] h-auto w-[200px] aspect-square rounded-full overflow-hidden border-[8px] border-white'/>
+                    <div className='w-3/4 p-5'>
+                        <h1 className='text-2xl font-medium'>{instructor.Name}</h1>                        
+                        <p className='text-lg max-w-[800px]'>{instructor.Bio}</p>
+                    </div>
                 </div>
             </div>
         

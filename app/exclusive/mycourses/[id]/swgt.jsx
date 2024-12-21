@@ -26,9 +26,8 @@ const getSwgtQuizes = async (docId) => {
                     qid:doc.data()?.docId
             })),
             NOTES : NOTES.docs.map(doc => ({
-                title:doc.data().title,
-                Data:doc.data()?.Data?.length ,
-                id:doc.data()?.docId
+                ...doc.data() ,
+                id:doc.id
             }))
         }
         resolve(result)
@@ -41,7 +40,7 @@ const SWGTQuizes = async ({ params }) => {
     if(error || !token) return <div>{error}</div>
 
     const quizes = await getSwgtQuizes(params.id)
-    // quizes.forEach(quiz => console.log(quiz?.title))
+    // quizes.forEach(quiz => //console.log(quiz?.title))
 
     return (
         <div>
@@ -67,8 +66,8 @@ const SWGTQuizes = async ({ params }) => {
             <ContentAccordion title={`Notes (${quizes.NOTES.length})`}>
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-3 p-2'>
                     {
-                        quizes.NOTES.map((quiz,index)=>
-                            <SWGTQuizCard key={index} courseId={params.id} quizId={quiz.qid} title={quiz?.title} questions={quiz?.Data} type='NOTES'/>
+                        quizes.NOTES.map((note,index)=>
+                            <NoteCard key={index} course={params.id} id={note.id} title={note.title} preview={note.preview} description={note.description} paid={note.paid}/>
                         )
                     }
                 </div>
@@ -80,3 +79,16 @@ const SWGTQuizes = async ({ params }) => {
 export default SWGTQuizes
 
 
+const NoteCard = ({title,file,preview,description,paid,course,id}) => {
+
+    return (
+        <div className='bg-white shadow-md rounded-lg p-4 flex flex-col gap-2'>
+            <h1 className='text-lg font-semibold'>{title}</h1>
+            <p className='text-sm text-gray-500'>{description}</p>
+            <div className='flex gap-2 items-center'>
+                <Link href={`/exclusive/courses/${course}/note/${id}`} target='_blank' className='text-blue-500'>Download</Link>
+                <a href={preview} target='_blank' className='text-blue-500'>Preview</a>
+            </div>
+        </div>
+    )
+}

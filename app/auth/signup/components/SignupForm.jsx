@@ -44,7 +44,7 @@ const SignupForm = () => {
           setAddress(1)
         }
       }catch(e){
-        console.log(e)
+        //console.log(e)
       }
     }
   ,[pincode])
@@ -110,7 +110,7 @@ const SignupForm = () => {
           title:"Signup Success",
         })
       }catch(e){
-        console.log(e)
+        //console.log(e)
         setLoading(false)
         toast({
           title:"Something went wrong",

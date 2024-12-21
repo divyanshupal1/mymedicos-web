@@ -15,7 +15,7 @@ export default async function middleware(request) {
   }
 
   let subscription = decoded.subscription
-  // console.log(subscription)
+  // //console.log(subscription)
   
 }
 

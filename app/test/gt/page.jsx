@@ -40,7 +40,7 @@ const Test = () => {
           }
         })
         let data = await res.json()
-        console.log(data)
+        //console.log(data)
         if(data.success){
           setQuiz(data.data)
           setLoading(false)
@@ -51,7 +51,7 @@ const Test = () => {
         setLoading(false)
       }
       catch(e){
-        //console.log(e)
+        ////console.log(e)
         alert("Something went wtong")
         setLoading(false)
       }

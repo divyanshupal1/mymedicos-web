@@ -19,17 +19,17 @@ export const usePlansStore = create(
             fetchPlans: async (section) => {
                 if(!section) return false;
                 try{
-                    console.log("fetching plans for",section)
+                    //console.log("fetching plans for",section)
                     const querySnapshot = await getDocs(collection(db, "Plans",sections[section],"Subscriptions"));
                     let plan = [];
                     querySnapshot.forEach((doc) => {
-                        // console.log(doc.data());
+                        // //console.log(doc.data());
                         plan.push(doc.data());
                     });
                     set((state)=>({plans:{...state.plans,[section]:plan}}));
                     return true;
                 }catch(e){
-                    console.log(e)
+                    //console.log(e)
                     return false;
                 }
                 

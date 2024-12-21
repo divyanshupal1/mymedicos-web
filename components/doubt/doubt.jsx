@@ -51,7 +51,7 @@ export default Doubt
 
 const DoubtSidebar = ({close}) => {
     const {chats,activeChatId} = useChatStore(state=>state)
-    console.log(chats)
+    //console.log(chats)
     return (
         <>
             <div className='flex gap-x-3 items-center justify-start h-[60px] px-4  bg-neutral-100 border-b border-neutral-200'>
@@ -131,7 +131,7 @@ const MessagesDisplay = () => {
     },[activeChatId,unsubscribe,subscribeToChat,user])
 
     if(activeChatId==null) return <></>
-    console.log(messages[activeChatId])
+    //console.log(messages[activeChatId])
 
     return (
         <div ref={messageContainer} className='px-4 py-20 max-h-full w-full overflow-y-scroll custom-scroll absolute bottom-0'>
@@ -163,7 +163,7 @@ const MessageSend = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        console.log(message)
+        //console.log(message)
         sendMessage(user,activeChatId,message)
         setMessage('')
     }

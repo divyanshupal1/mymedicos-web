@@ -56,7 +56,7 @@ export function ExclusiveCarousel() {
 
   const user = useCustomAuth('/exclusive')
 
-  console.log(user)
+  //console.log(user)
 
 
   // const setApiChange = (api) => {

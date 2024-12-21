@@ -101,9 +101,9 @@ export const Navbar = () => {
                     </div>
                 }
             </div>
-            { path[1]!== '' && path.length<=2 && <div className={`h-16 hidden max-llg:flex max-mmd:hidden max-sm:flex justify-center p-2 ${path.length>2 ? "hidden":""}`}>
-                {/* <SearchBar className={"max-w-[800px]"}/> */}
-            </div> }           
+            {/* { path[1]!== '' && path.length<=2 && <div className={`h-16 hidden max-llg:flex max-mmd:hidden max-sm:flex justify-center p-2 ${path.length>2 ? "hidden":""}`}>
+                <SearchBar className={"max-w-[800px]"}/>
+            </div> }            */}
         </nav>
         
     )

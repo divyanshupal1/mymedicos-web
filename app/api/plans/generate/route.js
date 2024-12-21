@@ -78,7 +78,7 @@ export async function POST(req,res){
         return new Response(JSON.stringify({status:"success",order_id:order.id}));
     }
     catch(e){
-        console.log(e)
+        //console.log(e)
         return new Response(JSON.stringify({"success":false,message:"Something went wrong!"}))
     }
 }

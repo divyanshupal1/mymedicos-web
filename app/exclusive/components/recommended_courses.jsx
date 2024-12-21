@@ -10,7 +10,7 @@ const RecommendedCourses = async () => {
     const interests = decoded.Interests || ['Dermatology']
     const coursesDocs = await admin.firestore().collection('Exclusive_Course').where('subject','in',interests).limit(6).get()
     const courses = coursesDocs.docs.map(doc => ({...doc.data(),id:doc.id}))
-    console.log(courses)
+    //console.log(courses)
   return (
     <div>
       {

@@ -42,7 +42,7 @@ const categories = {
 export async function GET(req, res) {
     const token = req.cookies.get('authtoken').value
     let {subscription,uid} = decode(token)  
-    console.log(subscription)
+    //console.log(subscription)
     const searchParams = req.nextUrl.searchParams
     const section = searchParams.get('section')
     const category = searchParams.get('category')
@@ -115,7 +115,7 @@ export async function GET(req, res) {
 
     }
     catch(err){
-        console.log(err)
+        //console.log(err)
         return new NextResponse(JSON.stringify({message:"Something wrong"}))
     }
 }

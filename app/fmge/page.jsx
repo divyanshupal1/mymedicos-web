@@ -20,7 +20,7 @@ const FMGE = () => {
     const [practiceSets,setPracticeSets] = useState([])
 
     useEffect(()=>{
-        //console.log(user)
+        ////console.log(user)
         async function getData(){
             const praciceSets = await getDocs(query(collection(db,'QuizProgress',user.uid,'fmge'),where('submitted','==',false)))
             let temp = []
@@ -34,7 +34,7 @@ const FMGE = () => {
                 temp_gts.push(doc.data())
             })
             setGt(temp_gts)
-            //console.log(temp,temp_gts)
+            ////console.log(temp,temp_gts)
         }
         getData()
 

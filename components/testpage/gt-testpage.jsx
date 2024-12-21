@@ -83,7 +83,7 @@ const GTTestPage = ({quizData,category}) => {
             })
         }).catch((err)=>{
             setSynced(0)
-            console.log(err)
+            //console.log(err)
             setSubmitting(false)
             toast({
                 title: "Failed Submitting Quiz",
@@ -106,7 +106,7 @@ const GTTestPage = ({quizData,category}) => {
                     setSynced(1)
                 }).catch((err)=>{
                     setSynced(0)
-                    //console.log(err)
+                    ////console.log(err)
                     toast({
                         title: "Failed Saving Progress",
                         variant: "destructive"

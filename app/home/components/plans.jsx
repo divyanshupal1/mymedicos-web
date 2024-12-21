@@ -248,7 +248,7 @@ const ExpandedPlan = ({plan,section}) => {
     const [loading, setLoading] = React.useState(false)
 
     const handlePurchase = async () =>{
-        console.log(user)
+        //console.log(user)
         if(user==null) router.push('/login')
         else{
             setLoading(true)
@@ -263,7 +263,7 @@ const ExpandedPlan = ({plan,section}) => {
 
             }
             else{
-                console.log(res.data.status,res.data)
+                //console.log(res.data.status,res.data)
                 setLoading(false)
             }
         

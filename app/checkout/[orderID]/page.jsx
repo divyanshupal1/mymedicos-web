@@ -94,7 +94,7 @@ function Page({params}) {
         });
         paymentObject.open();
     }
-    ////console.log(result.user)
+    //////console.log(result.user)
     return (
         <>
         <div className='w-screen h-screen flex flex-col justify-between '>

@@ -8,7 +8,7 @@ import { ContentAccordion } from './content-accordion'
 
 
 const getSwgtQuizes = async (docId) => {
-    console.log("DOCID",docId)
+    //console.log("DOCID",docId)
     const SWGT = await admin.firestore().collection('Exclusive_Course').doc(docId).collection('SWGT').get()
     const CWT = await admin.firestore().collection('Exclusive_Course').doc(docId).collection('CWT').get()
     const NOTES = await admin.firestore().collection('Exclusive_Course').doc(docId).collection('Notes').get()
@@ -41,7 +41,7 @@ const SWGTQuizes = async ({ id }) => {
     if(error || !token) return <div>{error}</div>
 
     const quizes = await getSwgtQuizes(id)
-    console.log("QUIZES",quizes.NOTES)
+    //console.log("QUIZES",quizes.NOTES)
 
     return (
         <div>

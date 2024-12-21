@@ -91,7 +91,7 @@ const TestPage = ({quizData,category,section}) => {
             })
         }).catch((err)=>{
             setLoading(false)
-            //console.log(err)
+            ////console.log(err)
             toast({
                 title: "Failed Loading Your Progress",
                 description: "Reopen the quiz to try again",
@@ -109,7 +109,7 @@ const TestPage = ({quizData,category,section}) => {
                     setSynced(1)
                 }).catch((err)=>{
                     setSynced(0)
-                    //console.log(err)
+                    ////console.log(err)
                     toast({
                         title: "Failed Saving Progress",
                         variant: "destructive"

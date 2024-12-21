@@ -19,7 +19,7 @@ export async function GET(req,{params}){
             status
         }));
     }catch(e){
-        console.log(e);
+        //console.log(e);
         return new Response(JSON.stringify({success:false,message:"Something went wrong!"}));
     }
 }

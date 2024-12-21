@@ -1,3 +1,4 @@
+import { subscribePlan } from "../../exclusive/callback/route";
 import { activatePlan } from "../callback/route";
 
 const orderCollections = {
@@ -13,6 +14,9 @@ export async function POST(req){
 
         if(type=="plans"){
             return activatePlan(data.order_id);
+        }
+        if(type=="exclusive"){
+            return subscribePlan(data.order_id);
         }
 
 

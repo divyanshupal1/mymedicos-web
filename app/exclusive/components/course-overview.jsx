@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import SWGTQuizes from "../courses/[id]/swgt";
 import CourseReviews from "./course-reviews";
+import CourseBuy from "./course_buy";
 
 const getCourseDetails = async (
     courseId
@@ -70,7 +71,7 @@ const CourseOverview = async ({ id }) => {
                             {
                                 course.data?.advantages?.map((advantage, index) => (
                                     <div key={index} className="w-full flex items-center gap-x-3 text-slate-700">
-                                        <span className="p-1 bg-green-400 rounded-full text-white"><Check size={16}/></span>
+                                        <span className="p-1 bg-green-400 rounded-full text-white"><Check size={16} /></span>
                                         <span>{advantage}</span>
                                     </div>
                                 ))
@@ -78,60 +79,14 @@ const CourseOverview = async ({ id }) => {
                         </div>
                     </div>
                 }
-                <SWGTQuizes id={id}/>
+                <SWGTQuizes id={id} />
                 <div className="min-w-[300px] md:hidden h-fit p-4 my-2 bg-green-50 rounded-lg shadow-md border sticky top-0">
-                <h1 className="font-semibold">Course Fee</h1>
-                <div className="w-full flex flex-col mt-6">
-                    <RadioGroup defaultValue="comfortable" className="w-full space-y-3">
-                        <div className="flex items-center space-x-2 w-full">
-                            <RadioGroupItem value="default" id="r1" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>6 Months</span> <span className="font-semibold">Rs.{course.data.price[6]}</span></Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="comfortable" id="r2" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>12 Months</span> <span className="font-semibold">Rs.{course.data.price[12]}</span></Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="compact" id="r3" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>18 Months</span> <span className="font-semibold">Rs.{course.data.price[18]}</span></Label>
-                        </div>
-                    </RadioGroup>
-                </div>
-                <Button className="mt-6 w-full">Enroll Now</Button>
-                <div className="w-full flex flex-col mt-6 gap-3">
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16}/><span>Full preparation</span></div>
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16}/><span>Doubt Support</span></div>
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 whitespace-nowrap text-sm"><Check size={16}/><span>30 Days Money Back Guarantee</span></div>
-
-                </div>
+                    <CourseBuy courseId={id} m6={course.data.price[6]} m12={course.data.price[12]} m18={course.data.price[18]} />
                 </div>
                 <CourseReviews courseId={id} />
             </div>
             <div className="min-w-[300px] max-md:hidden h-fit p-4 my-2 bg-green-50 rounded-lg shadow-md border sticky top-0">
-                <h1 className="font-semibold">Course Fee</h1>
-                <div className="w-full flex flex-col mt-6">
-                    <RadioGroup defaultValue="comfortable" className="w-full space-y-3">
-                        <div className="flex items-center space-x-2 w-full">
-                            <RadioGroupItem value="default" id="r1" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>6 Months</span> <span className="font-semibold">Rs.{course.data.price[6]}</span></Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="comfortable" id="r2" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>12 Months</span> <span className="font-semibold">Rs.{course.data.price[12]}</span></Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="compact" id="r3" />
-                            <Label htmlFor="r1" className="whitespace-nowrap flex items-center justify-between gap-x-3 w-full"><span>18 Months</span> <span className="font-semibold">Rs.{course.data.price[18]}</span></Label>
-                        </div>
-                    </RadioGroup>
-                </div>
-                <Button className="mt-6 w-full">Enroll Now</Button>
-                <div className="w-full flex flex-col mt-6 gap-3">
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16}/><span>Full preparation</span></div>
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16}/><span>Doubt Support</span></div>
-                    <div className="w-full flex items-center gap-x-3 text-slate-700 whitespace-nowrap text-sm"><Check size={16}/><span>30 Days Money Back Guarantee</span></div>
-
-                </div>
+                <CourseBuy courseId={id} m6={course.data.price[6]} m12={course.data.price[12]} m18={course.data.price[18]} />
             </div>
         </div>
 

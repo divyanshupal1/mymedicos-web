@@ -28,7 +28,7 @@ export async function GET(req,{ params }) {
     });
 
     var data;
-    // console.log(result1)
+    // //console.log(result1)
 
     //checking if data is available or not
     try{ data=result1.result.records[0].item[0] }    
