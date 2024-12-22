@@ -1,0 +1,60 @@
+{
+    "workbench.colorCustomizations": {
+        
+        "window.activeBorder": "#3ec8ff",
+
+        //title bar
+        "titleBar.activeBackground": "#000000",
+        "titleBar.activeForeground": "#b8b2b2",
+        "titleBar.inactiveBackground": "#000000",
+        "titleBar.inactiveForeground": "#bdbdbd",
+        "titleBar.border": "#000000",
+
+        //status bar
+        "statusBar.background": "#000000",
+        "statusBar.foreground": "#c5c5c5",
+        "statusBar.border": "#232323",
+        "statusBar.noFolderBackground": "#000000",
+        "statusBar.noFolderForeground": "#ffffff",
+        
+
+        //menu items
+        "menu.background":"#000000",
+        "menu.foreground":"#cecece",
+        "menu.selectionBackground":"#151515",
+        "menu.border":"#454545",
+        "menu.separatorBackground":"#1f1f1f",
+
+        //tabs
+        "tab.activeBackground": "#161616",
+        "tab.activeForeground": "#ffffff",
+        "tab.inactiveForeground": "#b3b3b3",
+        "tab.activeBorder": "#00000000",
+        "tab.inactiveBackground": "#000000",
+        "editorGroupHeader.tabsBackground": "#000000",
+
+        //activity bar
+        "activityBar.background": "#000000",
+        "activityBar.foreground": "#ffffff",
+        "activityBar.border": "#151515",
+        "activityBarBadge.background": "#000000",
+        "activityBarBadge.foreground": "#d5dfe5",
+        "activityBar.inactiveForeground":"#444444",
+        "activityBar.activeBorder":"#0066ff00",
+        "activityBar.activeBackground": "#000000",
+        
+        //side bar
+        "sideBar.background": "#000000",
+        "sideBar.foreground": "#cdcdcd",
+        "sideBar.border": "#0d0d0d",
+        "sideBarTitle.foreground": "#555555",
+        
+        //editor
+        "editor.background": "#0e0e0e",
+        "editor.foreground": "#808080",
+        "editor.selectionBackground": "#5e5e5ea6",
+        "editor.selectionHighlightBackground": "#2d2d2dac",
+        "editorLineNumber.activeForeground": "#35cdfc",
+        "editorLineNumber.dimmedForeground": "#35cdfc",
+    }
+}

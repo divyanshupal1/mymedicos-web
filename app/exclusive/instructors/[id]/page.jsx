@@ -6,6 +6,7 @@ import admin from '@/lib/firebase_admin'
 const InstructorDetails = async ({params}) => {
     const instructorId = params.id
 
+
     const instructorDoc = await admin.firestore().collection('MentorRegistration').doc(instructorId).get()
     const instructor = instructorDoc.data()
 

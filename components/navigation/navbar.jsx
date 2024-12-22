@@ -27,7 +27,8 @@ const links = [
     // {sub:false,name:'MBBS',href:"/mbbs"},
     // {sub:false,name:'PG NEET',href:"/pgneet"},
     // {sub:false,name:'FMGE',href:"/fmge"},
-    // {sub:false,name:'Exclusive',href:"/exclusive"},
+    {sub:false,name:'Exclusive',href:"/exclusive"},
+    {sub:false,name:'News',href:"/news"},
     // {sub:false,name:'NEET SS',href:"/neetss"},
     // {   
     //     sub:true,
@@ -90,7 +91,7 @@ export const Navbar = () => {
                         </div>
                         </Link> */}
                         <ProfileButton/>
-                        {/* <div className='hidden max-mmd:block'><SideBar/></div> */}
+                        <div className='hidden max-mmd:block'><SideBar/></div>
                     </div>
                 }
                 {
