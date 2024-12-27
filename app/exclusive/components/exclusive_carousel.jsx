@@ -77,7 +77,7 @@ export function ExclusiveCarousel() {
   return (
     <Carousel 
     // setApi={setApiChange}  
-    opts={{loop:true}} plugins={[Autoplay({delay:5000})]} className="w-full h-auto p-4">
+    opts={{loop:true}} plugins={[Autoplay({delay:5000})]} className="w-full h-full max-h-[500px] p-4">
       <CarouselContent>
           {
             items.map((item, index) => <CarouselItem key={index}> <NeetPgItem item={item}/> </CarouselItem> )
@@ -94,7 +94,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link"
 const NeetPgItem = ({item}) => {
     return (
-        <div className="w-full h-full flex gap-x-3 justify-between px-10 items-center aspect-[10/4] bg-blue-50 max-xl:aspect-[10/5] max-lg:aspect-[11/7] max-md:aspect-[11/8] max-sm:aspect-[11/16] rounded-md">
+        <div className="w-full h-full flex gap-x-3 justify-between px-10 items-center  bg-blue-50  rounded-md">
 
             <div className="w-1/2 max-md:w-full h-full flex flex-col justify-center items-center">
               <div className="max-w-lg h-auto rounded-xl">

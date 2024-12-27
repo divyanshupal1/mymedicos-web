@@ -11,7 +11,7 @@ const CourseLayout = async ({
 
     return (
         <div className="w-full">
-            <div className="w-full overflow-x-hidden px-4">{children}</div>
+            <div className="w-full overflow-x-hidden">{children}</div>
         </div>
     );
 };

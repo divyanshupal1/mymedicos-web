@@ -16,9 +16,7 @@ const ExclusivePage = async () => {
                 <ExclusiveCarousel/>
             </div>
             <div className=''>
-                <div className='w-auto overflow-x-auto ml-4 custom-scroll pb-2'>
-                    <CategoriesSlider exams={JSON.stringify(exams)}/>
-                </div>
+                <CategoriesSlider exams={JSON.stringify(exams)}/>
             </div>
             <div className='w-full p-[50px]'>
                 <div>

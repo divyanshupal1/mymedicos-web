@@ -17,7 +17,7 @@ export function InstructorCard({
     DocID
 }) {
     return (
-        <Link href={`/exclusive/instructors/${DocID}`} className="w-full overflow-hidden transition-all hover:shadow-lg cursor-pointer">
+        <Link href={`/exclusive/instructors/${Prefix}-${Name.replaceAll(" ","-")}-${DocID}`} className="w-full overflow-hidden transition-all hover:shadow-lg cursor-pointer">
         <Card className="w-full h-full">
             <CardContent className="p-6">
                 <div className="flex flex-col items-center gap-10">

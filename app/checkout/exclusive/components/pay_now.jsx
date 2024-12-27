@@ -60,8 +60,8 @@ const PayNow = ({amount, order_id, currency}) => {
     }
     
     return (
-        <div className='mt-auto p-4'>
-            <h1 className='font-semibold text-center'>Total Amount: Rs. {amount/100}</h1>
+        <div className='mt-auto p-4 w-full  flex flex-col items-center'>
+            <h1 className='font-semibold text-center mb-2'>Total Amount: Rs. {amount/100}</h1>
             <button id="rzp-button1" className='bg-blue-500 p-3 text-white w-full max-w-xl rounded-full mx-auto mb-2' onClick={displayRazorpay}>Pay Now</button>
         </div>
     )

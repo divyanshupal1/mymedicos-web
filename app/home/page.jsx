@@ -5,8 +5,10 @@ import Plans from './components/plans'
 import GTsection from './components/gt_section'
 import AnalyticsSection from './components/analytics_section'
 import GridSection from './components/grid_section'
+import { permanentRedirect } from 'next/navigation'
 
 const Page = () => {
+    permanentRedirect('/exclusive')
     return (
         <div className='w-full h-screen'>
             <div className='w-full'>

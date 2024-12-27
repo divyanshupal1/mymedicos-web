@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 
 const CourseBuy = ({ m6, m12, m18 ,courseId}) => {
+    const [loading, setLoading] = React.useState(false)
     const [selected, setSelected] = React.useState("12")
     const router = useRouter()
     const {toast} = useToast()
@@ -26,6 +27,7 @@ const CourseBuy = ({ m6, m12, m18 ,courseId}) => {
 
     const handleEnroll = async () => {
         try{
+            setLoading(true)
             const user = await getLoggedInUser()
             if(!user?.data) router.push('/auth/login')
 
@@ -43,15 +45,21 @@ const CourseBuy = ({ m6, m12, m18 ,courseId}) => {
             else{
                 router.push(`/checkout/exclusive/${order.data.order_id}`)
             }
+            setLoading(false)
 
         }catch(e){
-            //console.log(e)
+            console.log(e)
+            setLoading(false)
+            toast({
+                title: "Error",
+                description:"Something went wrong",
+            })
         }
     }
 
     return (
         <div className='w-full h-full'>
-            <h1 className="font-semibold">Course Fee</h1>
+            
             <div className="w-full flex flex-col mt-6">
                 <RadioGroup defaultValue={selected} onValueChange={(val)=>setSelected(val)}  className="w-full space-y-3">
                     <div className="flex items-center space-x-2 w-full">
@@ -68,8 +76,8 @@ const CourseBuy = ({ m6, m12, m18 ,courseId}) => {
                     </div>
                 </RadioGroup>
             </div>
-            <Button className="mt-6 w-full" onClick={handleEnroll}>Enroll Now</Button>
-            <div className="w-full flex flex-col mt-6 gap-3">
+            <Button className="mt-6 w-full" loading={loading} onClick={handleEnroll}>Enroll Now</Button>
+            <div className="w-full flex-col mt-6 gap-3 hidden md:flex">
                 <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16} /><span>Full preparation</span></div>
                 <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16} /><span>Doubt Support</span></div>
                 <div className="w-full flex items-center gap-x-3 text-slate-700 whitespace-nowrap text-sm"><Check size={16} /><span>30 Days Money Back Guarantee</span></div>

@@ -45,7 +45,7 @@ const SWGTQuizes = async ({ id }) => {
 
     return (
         <div>
-            <h1 className='text-base font-semibold mb-4'>Course Content</h1>
+            <h1 className='text-base font-semibold my-4'>Course Content</h1>
             <ContentAccordion title={`Subject Wise Tests (${quizes.SWGT.length})`} >
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-3 p-2'>
                     {

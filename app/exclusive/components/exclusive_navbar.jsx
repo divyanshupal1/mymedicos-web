@@ -7,7 +7,7 @@ const links = [
     {name:'Home',href:"/exclusive",active:(path)=> path.length===2 && path[1]==='exclusive'},
     {name:'My Courses',href:"/exclusive/mycourses",active:(path)=>path[2]==='mycourses'},
     {name:'Instructors',href:"/exclusive/instructors",active:(path)=>path[2]==='instructors'},
-    {name:'Courses',href:"/exclusive/courses",active:(path)=>path[2]==='courses'},
+    {name:'All Courses',href:"/exclusive/courses",active:(path)=>path[2]==='courses'},
 ]
 
 

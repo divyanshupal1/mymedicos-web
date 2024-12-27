@@ -201,8 +201,11 @@ export default function ImageSelect({setUrl}) {
             </div>
 
 
-            <Dialog open={!!imgSrc && !cropped}>
-                <DialogContent>
+            <Dialog open={!!imgSrc && !cropped} >
+                <DialogContent className="max-h-[calc(100vh-80px)] overflow-auto" closeBtn closeAction={() => {
+                    setImgSrc('')
+                    setCropped(false)
+                }}>
                     <DialogHeader>
                         <DialogTitle>Select profile image</DialogTitle>
                         <DialogDescription>User profile image</DialogDescription>
@@ -215,6 +218,7 @@ export default function ImageSelect({setUrl}) {
                                 onComplete={(c) => setCompletedCrop(c)}
                                 aspect={1}
                                 minHeight={100}
+                                className=''
 
                             >
                                 <img

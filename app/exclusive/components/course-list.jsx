@@ -5,7 +5,9 @@ import CourseCard from './course_card'
 
 const CourseList = ({courses}) => {
     courses = JSON.parse(courses)
-    const selected = useSearchParams().get('exam')
+    let selected = useSearchParams().get('e')
+    selected = selected ? selected.replaceAll("-"," ") : null
+
     return (
         <div className='w-full flex flex-wrap gap-4 p-4'>
             {   

@@ -22,7 +22,6 @@ const NEWS = async ({searchParams}) => {
 
   return (
     <div className='w-full p-2'>
-      <h1 className='text-xl font-semibold'>News</h1>
       <div className='flex flex-col gap-y-4'>
           {
             news.map((item, id) => (

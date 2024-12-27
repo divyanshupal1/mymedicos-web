@@ -10,8 +10,8 @@ const CoursesPage = async () => {
 
   return (
     <div className='w-full'>
-      <div className='w-full font-medium text-2xl p-4 mt-5'>Courses</div>
-      <div className=''>
+      {/* <div className='w-full font-medium text-2xl p-4 mt-5'>Courses</div> */}
+      <div className='mt-4'>
         <div className='w-auto overflow-x-auto ml-4 custom-scroll pb-2'>
           <CategoriesSlider exams={JSON.stringify(exams)} />
         </div>

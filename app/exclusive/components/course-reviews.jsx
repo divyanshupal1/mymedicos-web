@@ -2,13 +2,13 @@ import { FaStar,FaStarHalfAlt } from 'react-icons/fa'
 import admin from "@/lib/firebase_admin"
 
 const CourseReviews = async ({ courseId }) => {
-    const reviewsDocs = await admin.firestore().collection('Exclusive_Course').doc(courseId).collection('REVIEWS').get()
+    const reviewsDocs = await admin.firestore().collection('Exclusive_Course').doc(courseId).collection('REVIEWS').limit(10).get()
     const reviews = reviewsDocs.docs.map(doc => doc.data())
 
     
 
     return (
-        <div className="w-full">
+        <div className="w-full mb-20 md:mb-10">
             <h1 className="font-medium text-lg">Reviews</h1>
             {reviews.length === 0 ? (
                 <p>No reviews available</p>
