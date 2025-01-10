@@ -22,7 +22,7 @@ const NEWS = async ({searchParams}) => {
 
   return (
     <div className='w-full p-2'>
-      <div className='flex flex-col gap-y-4'>
+      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto'>
           {
             news.map((item, id) => (
               <NewsCard key={id} item={JSON.stringify(item)} />

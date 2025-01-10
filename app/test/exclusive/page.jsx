@@ -12,13 +12,13 @@ const TestPage = dynamic(() => import('./testpage'),{
 
 const Test = async ({searchParams}) => {
 
-  const {course,quiz,type} = await searchParams
+  const {course,quiz,type,name} = await searchParams
   const {token,error} = decodeToken()
 
   if(!course || !quiz || !type) return <div>Invalid Request</div>
   if(error || !token) return <div>{error}</div>
 
-  const quizDoc = await admin.firestore().collection('Exclusive_Course').doc(course).collection(type).doc(quiz).get()
+  const quizDoc = await admin.firestore().collection('Exclusive_Course').doc(course.split("-").pop()).collection(type).doc(quiz).get()
   if(!quizDoc.exists) return <div>Quiz not found</div>
   const quizData = quizDoc.data()
 
@@ -65,7 +65,7 @@ const Test = async ({searchParams}) => {
     <TestPage  
       quizData={JSON.stringify(quizData)} 
       progressData={JSON.stringify(progressData)}
-      quizInfo={JSON.stringify({course,quiz,type})}
+      quizInfo={JSON.stringify({course,quiz,type,name})}
     />
   ) 
 }

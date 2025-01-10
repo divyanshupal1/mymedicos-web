@@ -16,15 +16,17 @@ import { useToast } from '@/components/ui/use-toast';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { saveProgress, submitQuiz } from '@/actions';
+import { useRouter } from 'next/navigation';
 
 
 const dummyImage =["noimage","https://firebasestorage.googleapis.com/v0/b/mymedicosupdated.appspot.com/o/Quiz%2Fthumbnails%2F6b7d1ffd-7637-4633-9fc8-004702f7ada4No.png?alt=media&token=5e162813-a98b-449c-a07d-e34c5faa1bde"];
 const optionList = ['A','B','C','D','E','F','G','H','I','J']
 
 const TestPage = ({quizData,quizInfo,progressData}) => {
+    const router = useRouter()
     quizData = JSON.parse(quizData)
     progressData = JSON.parse(progressData)
-    const {course,quiz,type} = JSON.parse(quizInfo)
+    const {course,quiz,type,name} = JSON.parse(quizInfo)
 
     const questions = quizData.Data
 
@@ -47,7 +49,7 @@ const TestPage = ({quizData,quizInfo,progressData}) => {
         setCurrentQuestion(currentQuestion-1)
     }
     const handleAnswer = (value) => {
-        // if(answered[currentQuestion]!=undefined) return
+        if(answered[currentQuestion]!=undefined) return
         setAnswered({...answered,[currentQuestion]:value})
         if(value==questions[currentQuestion].Correct) setScore(score+4)
         else  setScore(score-1)
@@ -57,16 +59,19 @@ const TestPage = ({quizData,quizInfo,progressData}) => {
         const date = new Date()
         setSubmitting(true)
         setSynced(0)
-        submitQuiz(course,quiz,type,{...progressData.submissions,[date.toISOString()]:{result:answered,marks:score}})
+        const id = crypto.randomUUID()
+        submitQuiz(course,quiz,type,{...progressData.submissions,[date.toISOString()]:{result:answered,marks:score,id}})
         .then(()=>{
             setSynced(1)
             setIsSubmitted(false)
             setSubmitting(false)
+            setAnswered({})
             toast({
                 title: "Quiz Submitted",
                 description: "You can now view the results",
                 variant: "success"
             })
+            router.push(`/exclusive/mycourses/${course}/${type}/${quiz}/${name}`)
         }).catch((err)=>{
             setSynced(0)
             setSubmitting(false)
@@ -180,8 +185,8 @@ const TestPage = ({quizData,quizInfo,progressData}) => {
                     </div>
                 }
                 <div className='flex gap-x-2 sticky bottom-2 mt-2  w-full justify-between'>
-                        <Button onClick={handlePrev} ><span><ChevronLeft/></span> Previous</Button>
-                        <Button onClick={handleNext} disabled={currentQuestion==questions.total-1}>Next <span><ChevronRight/></span></Button>
+                        <Button onClick={handlePrev} disabled={currentQuestion==0} ><span><ChevronLeft/></span> Previous</Button>
+                        <Button onClick={handleNext} disabled={currentQuestion==questions.length-1}>Next <span><ChevronRight/></span></Button>
                 </div>
             </div>
         </div>
