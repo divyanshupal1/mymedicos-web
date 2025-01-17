@@ -30,20 +30,20 @@ const CategoriesSlider =  ({exams}) => {
             <div className="flex gap-x-5 w-auto overflow-x-auto ml-4 scroll-hide scroll-smooth pr-[50px]" ref={container}>
                 {
                     exams?.map((exam,index)=>
-                        <Link href={`/exclusive/courses?e=${exam.replaceAll(" ","-")}`} key={index} className={`shrink-0 p-4 px-4 border ${exam==selected ?"bg-primary font-medium text-white":"bg-green-50"} rounded-md`}>{exam}</Link>
+                        <Link href={`/exclusive/courses?e=${exam.replaceAll(" ","-")}`} key={index} className={`shrink-0 p-4 px-4 border ${exam==selected ?"bg-primary font-medium text-white":"bg-green-50 dark:bg-green-950"} rounded-md`}>{exam}</Link>
                     )
                 }
             </div>
             {
                 scroll>0 &&
-                <div onClick={moveLeft} className="absolute h-full top-0 left-0 bg-gradient-to-l from-transparent to-white w-[50px] flex items-center justify-center cursor-pointer">
-                    <ChevronLeft className="w-10 h-10 text-neutral-600"/>
+                <div onClick={moveLeft} className="absolute h-full top-0 left-0 bg-gradient-to-l from-transparent to-white dark:to-black w-[50px] flex items-center justify-center cursor-pointer">
+                    <ChevronLeft className="w-10 h-10 text-neutral-600 dark:text-white"/>
                 </div>
             }
             {
                 showRight &&
-                <div onClick={moveRight} className="absolute h-full top-0 right-0 bg-gradient-to-r from-transparent to-white w-[50px] flex items-center justify-center cursor-pointer">
-                    <ChevronRight className="w-10 h-10 text-neutral-600"/>
+                <div onClick={moveRight} className="absolute h-full top-0 right-0 bg-gradient-to-r from-transparent to-white dark:to-black w-[50px] flex items-center justify-center cursor-pointer">
+                    <ChevronRight className="w-10 h-10 text-neutral-600 dark:text-white"/>
                 </div>
             }
         </div>

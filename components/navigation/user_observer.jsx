@@ -16,8 +16,11 @@ const UserObserver = () => {
     }));
 
     React.useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
+                const token = await user.getIdToken()
+
+                sessionStorage.setItem('token', token);
                 loggeduser == null && toast({
                     title: `Welcome back ${user.displayName != null ? user.displayName : ""} 😊 !`,
                 });

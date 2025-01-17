@@ -4,7 +4,7 @@ import ExclusiveNavbar from './components/exclusive_navbar'
 const ExclusiveLayout = ({children}) => {
     return (
         <div className='w-full h-auto'>
-            <div className='w-full h-[50px] shadow-sm bg-green-50'>
+            <div className='w-full h-[50px] shadow-sm bg-green-50 dark:bg-green-950'>
                 <ExclusiveNavbar/>
             </div>
             {children}

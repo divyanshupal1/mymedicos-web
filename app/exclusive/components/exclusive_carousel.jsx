@@ -94,7 +94,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link"
 const NeetPgItem = ({item}) => {
     return (
-        <div className="w-full h-full flex gap-x-3 justify-between px-10 items-center  bg-blue-50  rounded-md">
+        <div className="w-full h-full flex gap-x-3 justify-between px-10 items-center  bg-blue-50 dark:bg-blue-950  rounded-md">
 
             <div className="w-1/2 max-md:w-full h-full flex flex-col justify-center items-center">
               <div className="max-w-lg h-auto rounded-xl">
@@ -115,7 +115,7 @@ const NeetPgItem = ({item}) => {
               </div>
             </div>
             <div className="w-1/2 h-full flex items-center justify-center max-md:hidden ">
-                  <div className="card w-full max-w-sm bg-white h-auto p-5 rounded-xl shadow-lg border">
+                  <div className="card w-full max-w-sm bg-white dark:bg-gray-900 scale-95 h-auto p-5 rounded-xl shadow-lg border">
                     <div className="w-full h-16 bg-gradient-to-b from-[#2BD0BF] to-[#03755A] rounded-lg"></div>
                     <div className="text-2xl font-bold text-[#03755A] text-center mt-6">{item.card.title}</div>
                     <div className="mt-6 flex flex-col gap-y-4 pl-2">

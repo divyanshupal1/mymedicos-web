@@ -17,7 +17,7 @@ import CourseBuy from "./course_buy"
 export function CourseBuySheet({m6, m12, m18 ,courseId,cover,title}) {
     return (
         <>
-            <div className="hidden md:block w-full max-w-md p-4 bg-green-50 rounded-lg border mt-6"> 
+            <div className="hidden md:block w-full max-w-md p-4 bg-green-50 dark:bg-slate-900 rounded-lg border mt-6"> 
                 
                 {
                     cover && 

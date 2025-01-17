@@ -78,9 +78,9 @@ const CourseBuy = ({ m6, m12, m18 ,courseId}) => {
             </div>
             <Button className="mt-6 w-full" loading={loading} onClick={handleEnroll}>Enroll Now</Button>
             <div className="w-full flex-col mt-6 gap-3 hidden md:flex">
-                <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16} /><span>Full preparation</span></div>
-                <div className="w-full flex items-center gap-x-3 text-slate-700 text-sm"><Check size={16} /><span>Doubt Support</span></div>
-                <div className="w-full flex items-center gap-x-3 text-slate-700 whitespace-nowrap text-sm"><Check size={16} /><span>30 Days Money Back Guarantee</span></div>
+                <div className="w-full flex items-center gap-x-3 text-slate-700 dark:text-slate-100 text-sm"><Check size={16} /><span>Full preparation</span></div>
+                <div className="w-full flex items-center gap-x-3 text-slate-700 dark:text-slate-100 text-sm"><Check size={16} /><span>Doubt Support</span></div>
+                <div className="w-full flex items-center gap-x-3 text-slate-700 dark:text-slate-100 whitespace-nowrap text-sm"><Check size={16} /><span>30 Days Money Back Guarantee</span></div>
             </div>
         </div>
     )

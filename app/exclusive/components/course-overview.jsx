@@ -48,13 +48,13 @@ const CourseOverview = async ({ id }) => {
                     subject={course?.data?.subject}
                     description={course?.data?.description}
                 />
-                <div className="bg-neutral-100 p-4 mt-4 rounded-lg border border-neutral-200 md:shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
+                <div className="bg-neutral-100 dark:bg-neutral-900 p-4 mt-4 rounded-lg border border-neutral-200 dark:border-neutral-800 md:shadow-[0px_0px_10px_rgba(0,0,0,0.1)]">
                     <h1 className="font-medium text-base">About this course</h1>
-                    <p className="mt-3 text-slate-700" dangerouslySetInnerHTML={{__html:course.data?.about}}></p>
+                    <p className="mt-3 text-slate-700 dark:text-slate-200" dangerouslySetInnerHTML={{__html:course.data?.about}}></p>
                 </div>
                 {
                     course.data?.advantages &&
-                    <div className='w-full bg-slate-100 p-4 mt-4 rounded-lg border border-neutral-50'>
+                    <div className='w-full bg-slate-100 dark:bg-neutral-900 p-4 mt-4 rounded-lg border border-neutral-50 dark:border-neutral-800'>
                         <h1 className="font-medium text-base">What You'll get</h1>
                         <div className="flex flex-col gap-4 mt-4">
                             {

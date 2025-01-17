@@ -29,6 +29,7 @@ const links = [
     // {sub:false,name:'FMGE',href:"/fmge"},
     {sub:false,name:'Exclusive',href:"/exclusive"},
     {sub:false,name:'News',href:"/news"},
+    {sub:false,name:'Community',href:"/community"},
     // {sub:false,name:'NEET SS',href:"/neetss"},
     // {   
     //     sub:true,
@@ -55,7 +56,7 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='w-full flex flex-col shadow-sm z-[50] bg-white'>
+        <nav className='w-full flex flex-col shadow-sm z-[50] bg-white dark:bg-background border-b border-transparent dark:border-green-950'>
             <div className='w-full flex justify-between items-center p-3 px-5 '>
                 <div className='logo h-8 w-auto grow-0'>
                     <Logo/>
@@ -187,6 +188,8 @@ const ProfileButton = () => {
                     <DropdownMenuContent className="text-base font-medium">
                         <DropdownMenuItem>Profile</DropdownMenuItem>
                         <DropdownMenuItem onClick={signOutUser}>Logout</DropdownMenuItem>
+                        <DropdownMenuItem asChild><ThemeToggle/></DropdownMenuItem>
+
                     </DropdownMenuContent>
                 </DropdownMenu>
         }
@@ -246,3 +249,4 @@ const SideBar = () => {
 }
 import { Button } from '@/components/ui/button'
 import { IoClose } from "react-icons/io5";
+import { ThemeToggle } from '../theme-toggle'
