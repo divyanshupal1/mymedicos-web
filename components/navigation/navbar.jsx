@@ -56,7 +56,7 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='w-full flex flex-col shadow-sm z-[50] bg-white dark:bg-background border-b border-transparent dark:border-green-950'>
+        <nav className='w-full flex flex-col shadow-sm z-[1000] bg-white dark:bg-background border-b border-transparent dark:border-green-950'>
             <div className='w-full flex justify-between items-center p-3 px-5 '>
                 <div className='logo h-8 w-auto grow-0'>
                     <Logo/>
