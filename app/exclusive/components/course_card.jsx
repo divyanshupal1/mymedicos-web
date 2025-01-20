@@ -30,7 +30,7 @@ const CourseCard = ({courseData,mycourse}) => {
                 <p className="mt-2 text-gray-600 dark:text-gray-300 line-clamp-2">{course.description}</p>
                 <div className="my-4 space-y-2">
                     <div className="flex space-2 items-center gap-x-2">
-                        <RenderStars rating={course.rating_avg} />
+                        <RenderStars rating={course.rating_avg || 0} />
                         {course.rating_avg} ({course.rated_by})
                     </div>
                     <div className="flex space-x-2 items-center">

@@ -14,6 +14,19 @@ export const useCommunityStore = create((set, get) => ({
         error: null,
         loaded: false
     },
+    flashcardFeed: {
+        data: [],
+        loading: true,
+        loaded: false,
+        error: null
+    },
+    postFeed: {
+        data: [],
+        loading: true,
+        loaded: false,
+        error: null
+    },
+    //questions
     fetchFeed: async () => {
         const res = await requestHandler(
             axiosInstance.get('/questions/feed'),
@@ -61,6 +74,91 @@ export const useCommunityStore = create((set, get) => ({
                 }), 
                 setError: (error) => set({ 
                     questions: { ...get().questions, [id]: {...get().questions[id], error } } 
+                }) 
+            }
+        )
+        return res
+    },
+    createQuestion: async (title, body, tags) => {
+        const res = requestHandler(
+            axiosInstance.post('/questions',{title,body,tags}),
+            (data) => {
+                set({ 
+                    questions: { ...get().questions, [data.data.question._id]: data.data.question } 
+                })
+            },
+        )
+        return res
+    },
+    //posts
+    createPost : async (title,body,tags) => {
+        const res = requestHandler(
+            axiosInstance.post('/posts',{title,body,tags,post:true}),
+            (data) => {
+                set({ 
+                    posts: { ...get().posts, [data.data.post._id]: data.data.post } 
+                })
+            }
+        )
+        return res
+    },
+    getPostFeed: async () => {
+        const res = await requestHandler(
+            axiosInstance.get('/posts/feed'),
+            (data)=>{
+                const tempPosts = {}
+                const tempFeed = []
+                data.data.posts.forEach((post) => {
+                    tempFeed.push(post._id)
+                    tempPosts[post._id] = post
+                })
+                set({ 
+                    postFeed: { data: tempFeed, loading: false, loaded: true },
+                    posts:{...get().posts,...tempPosts}
+                })
+            },
+            {
+                setLoading:(loading)=>set({
+                    postFeed:{...get().postFeed,loading}
+                }),
+                setError:(error)=>set({
+                    postFeed:{...get().postFeed,error}
+                })
+            }
+        )
+    },
+    createFlashCard : async (title,body,tags,readtime) => {
+        const res = requestHandler(
+            axiosInstance.post('/posts',{title,body,tags,readtime,flashcard:true}),
+            (data) => {
+                set({ 
+                    posts: { ...get().posts, [data.data.post._id]: data.data.post } 
+                })
+            }
+        )
+        return res
+    },
+    getFlashcardFeed: async () => {
+        const res = await requestHandler(
+            axiosInstance.get('/posts/flashcards/feed'),
+            (data) => {
+                const tempPosts = {}
+                const tempFeed = []
+                data.data.flashcards.forEach((post) => {
+                    tempFeed.push(post._id)
+                    tempPosts[post._id] = post
+                })
+                set({ 
+                    flashcardFeed: { data: tempFeed, loading: false, loaded: true },
+                    posts:{...get().posts,...tempPosts}
+                })
+            },
+            { 
+                setLoading: (loading) => set({ 
+                    flashcardFeed: { ...get().flashcardFeed,loading } 
+                }), 
+                setError: (error) => set({ 
+                    flashcardFeed: { ...get().flashcardFeed,error } 
                 }) 
             }
         )

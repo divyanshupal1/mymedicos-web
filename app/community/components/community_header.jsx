@@ -15,6 +15,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import QuestionPostDialog from './question_post_dialog'
+import { QuestionDialog } from './header/question_dialog'
+import { PostDialog } from './header/post_dialog'
+import { FlashCardDialog } from './header/flashcard_dialog'
 
 
 const CommunityHeader = () => {
@@ -34,32 +37,13 @@ const CommunityHeader = () => {
             </div>
             <div className='flex divide-x-2 divide-neutral-300 *:px-1 *:text-sm'>
                 <div className='w-full'>
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button asChild variant="ghost" size="sm" className="rounded-full w-full hover:bg-primary hover:text-white">
-                                <span><FaRegQuestionCircle className='scale-125' /></span>
-                                <span>Ask </span>
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent className="p-0 overflow-hidden">
-                            <DialogTitle className="hidden">Ask a question</DialogTitle>
-                            <div>Under construction</div>
-                            {/* <QuestionPostDialog/> */}
-                        </DialogContent>
-                    </Dialog>
-
+                    <QuestionDialog/>
                 </div>
                 <div className='w-full'>
-                    <Button variant="ghost" size="sm" className="rounded-full w-full hover:bg-primary hover:text-white">
-                        <span><HiPencilSquare className='scale-125' /></span>
-                        <span>Answer </span>
-                    </Button>
+                    <FlashCardDialog/>
                 </div>
                 <div className='w-full'>
-                    <Button variant="ghost" size="sm" className="rounded-full w-full hover:bg-primary hover:text-white">
-                        <span><MdPostAdd className='scale-125' /></span>
-                        <span>Post</span>
-                    </Button>
+                    <PostDialog/>
                 </div>
             </div>
         </div>

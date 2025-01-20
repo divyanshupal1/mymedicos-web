@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { MessageCircleIcon } from "lucide-react";
 import { MdOutlineModeComment } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import UserAvatar from "@/components/avatar";
 
 export const QuestionCard = ({ question }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ export const QuestionCard = ({ question }) => {
       </div >
       <div className="my-3 space-y-2 mb-5">
         <Link href={`/community/question/${question.title.replaceAll("?", "").replaceAll(" ", "-")}-${question._id}`} className="text-base font-semibold text-gray-800 dark:text-neutral-50 hover:underline">{question.title}</Link>
-        <p className="text-gray-700 dark:text-neutral-100">{question.body}</p>
+        <p className="text-gray-700 dark:text-neutral-100" dangerouslySetInnerHTML={{__html:question.body}}></p>
       </div>
 
       {/* Body */}
@@ -57,10 +58,7 @@ export const QuestionCard = ({ question }) => {
 const AuthorTab = ({ author, createdAt }) => {
   return (
     <div className="flex items-center gap-2">
-      <Avatar className="w-9 h-9">
-        <AvatarImage src={author?.photoURL} />
-        <AvatarFallback>{author?.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
-      </Avatar>
+      <UserAvatar img={author?.photoURL} name={author?.name} />
       <div>
         <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{author.name}</p>
         <p className="text-gray-600 dark:text-gray-400 text-xs">{new Date(createdAt).toDateString()}</p>

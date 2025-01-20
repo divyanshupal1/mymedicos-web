@@ -1,56 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
 import { useCommunityStore } from "@/store/useCommunityStore";
-import { QuestionCard } from "../../components/question_card";
 import LoadingScreen from "@/components/ui/loading-screen";
-
-const QestionDetailPage = ({ params }) => {
-  const id = params.id.split("-").pop();
-  const { questions, posts, fetchQuestionById } = useCommunityStore(
-    (state) => ({
-      questions: state.questions,
-      posts: state.posts,
-      fetchQuestionById: state.fetchQuestionById,
-    })
-  );
-
-  useEffect(() => {
-    fetchQuestionById(id);
-  }, [fetchQuestionById, id]);
-
-  return (
-    <div className="w-full max-w-2xl mx-auto h-full min-h-screen pt-3 px-2">
-      {
-        questions[id]?.data && 
-        <>
-          <QuestionCard question={questions[id]?.data} />
-          <div className="font-medium w-full px-5 mt-5">Answers</div>
-          <div className="w-full border-b-2 border-gray-300 dark:border-gray-700 mb-5 mt-2" />
-        </>
-      }
-      {
-        questions[id]?.data?.relatedPosts == null && <LoadingScreen />
-      }
-      {
-        questions[id]?.data?.relatedPosts &&
-          questions[id]?.data?.relatedPosts.map((postId) => (
-            <div key={postId} className="mt-3  ">
-              {posts[postId] && <PostCard postId={postId} />}
-            </div>
-          ))
-      }
-    </div>
-  );
-};
-
-export default QestionDetailPage;
-
-import LikeButton from "../../components/like_button/like_button";
-
+import LikeButton from "./like_button/like_button";
 import { MdOutlineModeComment } from "react-icons/md";
-import CommentsUI from "../../components/comments/comments";
+import { Clock } from "lucide-react";
 
-const PostCard = ({ postId }) => {
+export const PostCard = ({ postId,flashcard=false }) => {
   const { likePost, posts } = useCommunityStore((state) => ({
     likePost: state.likePost,
     posts: state.posts,
@@ -96,7 +52,7 @@ const PostCard = ({ postId }) => {
           </div>
         </div>
       </div>
-      <div className="p-3">{post.body}</div>
+      <div className="p-3" dangerouslySetInnerHTML={{__html:post.body}}></div>
       <div className="flex p-4 gap-x-3">
         <button
           
@@ -117,6 +73,12 @@ const PostCard = ({ postId }) => {
           close={() => setShowComments(false)}
           postId={postId}
         />
+        {flashcard && 
+            <div className='flex items-center p-0 h-fit bg-green-100/50 rounded-full px-3 py-1 gap-x-1'>
+                <Clock className='scale-75'/>
+                <span className='text-sm whitespace-nowrap'>{post.readtime}min <span className='hidden md:inline'>Readtime</span></span>
+            </div>
+        }
       </div>
       {/* {
                 showComments &&
@@ -131,15 +93,11 @@ const PostCard = ({ postId }) => {
 
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/store/userStore";
 import UserAvatar from "@/components/avatar";
 

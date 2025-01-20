@@ -10,12 +10,15 @@ import { useToast } from '@/components/ui/use-toast';
 const UserObserver = () => {
     const router = useRouter();
     const { toast } = useToast();
-    const { loggeduser, setUser } = useUserStore((state) => ({
+    const { loggeduser, setUser,setLoading,setLoaded } = useUserStore((state) => ({
         loggeduser: state.user,
-        setUser: state.setUser
+        setUser: state.setUser,
+        setLoading: state.setLoading,
+        setLoaded: state.setLoaded,
     }));
 
     React.useEffect(() => {
+        setLoading(true);
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const token = await user.getIdToken()
@@ -35,9 +38,13 @@ const UserObserver = () => {
                     } else {
                         setUser(null);
                     }
+                    setLoading(false);
+                    setLoaded(true);
                 });
 
             } else {
+                setLoading(false);
+                setLoaded(true);
                 setUser(null);
             }
         });

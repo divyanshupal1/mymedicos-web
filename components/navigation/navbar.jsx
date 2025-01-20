@@ -158,6 +158,7 @@ import { signOut } from 'firebase/auth'
 
 
 const ProfileButton = () => {
+    const router = useRouter()
     const {toast} = useToast()
     const {loggeduser,setUser} = useUserStore((state)=>({
         loggeduser:state.user,
@@ -171,6 +172,9 @@ const ProfileButton = () => {
                 title: 'Error signing out',
             })
         });
+    }
+    const gotoProfile = () => {
+        router.push('/profile')
     }
     return (
         <>
@@ -186,9 +190,9 @@ const ProfileButton = () => {
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="text-base font-medium">
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem onClick={gotoProfile}>Profile</DropdownMenuItem>
                         <DropdownMenuItem onClick={signOutUser}>Logout</DropdownMenuItem>
-                        <DropdownMenuItem asChild><ThemeToggle/></DropdownMenuItem>
+                        {/* <DropdownMenuItem asChild><ThemeToggle/></DropdownMenuItem> */}
 
                     </DropdownMenuContent>
                 </DropdownMenu>

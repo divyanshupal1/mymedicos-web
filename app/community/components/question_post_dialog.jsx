@@ -11,52 +11,68 @@ const QuillEditor = dynamic(() => import('./QuillEditor'), { ssr: false })
 
 const QuestionPostDialog = () => {
 
-    const [description, setDescription] = React.useState('')
+    const [title, setTitle] = React.useState('');
+    const [content, setContent] = React.useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log({ title, content });
+    }
+
     return (
-        <Tabs defaultValue="account" className="w-full max-md:h-[calc(100vh-4rem)]">
-            <TabsList className="w-full p-0 h-14 rounded-none overflow-hidden border-b">
-                <TabsTrigger value="question" className="w-full h-full data-[state=active]:bg-primary/50 rounded-t-md rounded-b-none">Ask Question</TabsTrigger>
-                <TabsTrigger value="post" className="w-full h-full data-[state=active]:bg-primary/50 rounded-t-md rounded-b-none">Create Post</TabsTrigger>
-            </TabsList>
-            <TabsContent value="question" className="w-full h-full p-6">
-                <div className='flex gap-3 flex-col '>
-                    <Label>Question</Label>
-                    <input type="text" placeholder="What is your question?"
-                        className='outline-none focus-within:outline-none bg-transparent border-b border-neutral-300  dark:border-gray-700 focus-within:dark:border-white p-1'
-                    />
-                </div>
-                <div className='flex gap-3 flex-col mt-8'>
-                    <Label>Description (optional)</Label>
-                    <QuillEditor value={description} onChange={(val)=>setDescription(val)} />
-                </div>
-                <div className='flex gap-3 items-center justify-end mt-12'>
-                    <DialogClose>
-                        <Button variant="ghost" className="rounded-full" >Cancel</Button>
-                    </DialogClose>
-                    <Button variant="default" className="rounded-full">Ask Question</Button>
-                </div>
-            </TabsContent>
-            <TabsContent value="post" className="w-full p-6">
-                <div className='flex gap-3 flex-col '>
-                    <Label>Post Title</Label>
-                    <input type="text" placeholder="Title of your post?"
-                        className='outline-none focus-within:outline-none bg-transparent border-b border-neutral-300  dark:border-gray-700 focus-within:dark:border-white p-1'
-                    />
-                </div>
-                <div className='flex gap-3 flex-col mt-8'>
-                    <Label>Description (optional)</Label>
-                    <input type="text" placeholder="Description of your post"
-                        className='outline-none focus-within:outline-none bg-transparent border-b border-neutral-300  dark:border-gray-700 focus-within:dark:border-white p-1'
-                    />
-                </div>
-                <div className='flex gap-3 items-center justify-end mt-12'>
-                    <DialogClose>
-                        <Button variant="ghost" className="rounded-full" >Cancel</Button>
-                    </DialogClose>
-                    <Button variant="default" className="rounded-full">Add Post</Button>
-                </div>
-            </TabsContent>
-        </Tabs>
+        // <div className="max-w-3xl mx-auto p-6">
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex items-center gap-2 mb-6">
+          {/* <PenLine className="w-6 h-6 text-blue-600" /> */}
+          <h1 className="text-2xl font-bold text-gray-800">Create a Post</h1>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label 
+              htmlFor="title" 
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="What would you like to ask or share?"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+              required
+            />
+          </div>
+
+          <div>
+            <label 
+              htmlFor="content" 
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Description
+            </label>
+            <div className="prose max-w-none">
+              <QuillEditor
+                value={content}
+                onChange={setContent}
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Post
+            </button>
+          </div>
+        </form>
+      </div>
+    // </div>
 
     )
 }

@@ -7,7 +7,7 @@ import Doubt from "@/components/doubt/doubt";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { GoogleTagManager } from '@next/third-parties/google'
 import UserObserver from "@/components/navigation/user_observer";
-import { ThemeProvider } from "@/components/theme-provider"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +23,7 @@ export default function RootLayout({ children }) {
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMJPH29S40"></script>
       </head>
       <body className={cn(inter.className,"overflow-x-hidden min-h-screen")}>
-      <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+
         <GoogleTagManager gtmId="GTM-T8MN5ZTC" />
         <UserObserver/>
         <div className="w-full h-screen flex flex-col items-start justify-start">
@@ -39,7 +34,6 @@ export default function RootLayout({ children }) {
         </div>
         <Toaster />
         <GoogleAnalytics gaId="G-YMJPH29S40"/>
-        </ThemeProvider>
       </body>
     </html>
   );

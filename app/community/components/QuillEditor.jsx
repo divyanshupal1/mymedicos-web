@@ -22,7 +22,7 @@ export default function QuillEditor({ value, onChange }) {
   ];
 
   return (
-    <div className="quill-wrapper border-2 !border-neutral-800 rounded-md shadow-sm overflow-hidden">
+    <div className="quill-wrapper border !border-neutral-300 dark:border-slate-800 rounded-md shadow-sm overflow-hidden">
       <ReactQuill
         ref={quillRef}
         theme="snow"
@@ -30,7 +30,7 @@ export default function QuillEditor({ value, onChange }) {
         onChange={onChange}
         modules={modules}
         formats={formats}
-        className="bg-slate-900 border-transparent min-h-[200px] "
+        className="dark:bg-slate-900 border-transparent min-h-[300px] h-full max-h-[350px] overflow-y-auto"
       />
     </div>
   );

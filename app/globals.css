@@ -94,7 +94,7 @@
 
 .ql-toolbar.ql-snow{
   border:none !important;
-  border-bottom: 2px solid rgb(37, 37, 37) !important;
+  border-bottom: 2px solid rgba(37, 37, 37, 0.336) !important;
 }
 .ql-container.ql-snow{
   border:none !important;
@@ -109,5 +109,10 @@
   height: 100% !important;
 }
 .ql-snow .ql-picker-options{
-  background-color: black !important;
+  background-color: rgba(232, 232, 232, 0.71) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+}
+.dark.ql-snow .ql-picker-options{
+  background-color: rgba(0, 0, 0, 0.525) !important;
 }
