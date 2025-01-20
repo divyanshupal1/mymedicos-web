@@ -130,7 +130,7 @@ const CommentsDrawer = ({ postId, open, close }) => {
   return (
 
     <Drawer open={open} onClose={close} className="md:hidden">
-      <DrawerContent className="max-w-3xl mx-auto ">
+      <DrawerContent className="max-w-3xl mx-auto z-[1200] ">
         <DrawerHeader>
           <DrawerTitle>Comments</DrawerTitle>
           <DrawerDescription></DrawerDescription>
