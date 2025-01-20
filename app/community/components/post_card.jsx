@@ -80,13 +80,6 @@ export const PostCard = ({ postId,flashcard=false }) => {
             </div>
         }
       </div>
-      {/* {
-                showComments &&
-                <div className=''>
-                    <div className='border-y-2 border-gray-300 dark:border-gray-800 p-2 px-3 my-3'>Comments</div>
-                    <CommentsUI />
-                </div>
-            } */}
     </div>
   );
 };
@@ -100,12 +93,28 @@ import {
 } from "@/components/ui/drawer";
 import { useUserStore } from "@/store/userStore";
 import UserAvatar from "@/components/avatar";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+
+const commentContext = React.createContext({edit:null,setEdit:null,reply:null,setReply:null});
 
 const CommentsDrawer = ({ postId, open, close }) => {
-  const { getPostComments, postComments } = useCommunityStore((state) => ({
+
+  const { getPostComments, postComments,commentOnPost } = useCommunityStore((state) => ({
     getPostComments: state.getPostComments,
     postComments: state.postComments,
+    commentOnPost:state.commentOnPost
   }));
+
+  const [selectedComment, setSelectedComment] = React.useState({
+    edit:null,
+    reply:null
+  });
+  const setEdit = (id) => setSelectedComment({...selectedComment,edit:id})
+  const setReply = (id) => setSelectedComment({...selectedComment,reply:id})
+
 
   useEffect(() => {
     if (
@@ -116,7 +125,7 @@ const CommentsDrawer = ({ postId, open, close }) => {
     ) {
       getPostComments(postId);
     }
-  }, [postComments, open, postId]);
+  }, [postComments, open, postId, getPostComments]);
 
   return (
 
@@ -129,21 +138,47 @@ const CommentsDrawer = ({ postId, open, close }) => {
         {postComments[postId] && postComments[postId].loading && (
           <LoadingScreen />
         )}
-        <div className="max-h-[calc(100vh-100px)] overflow-y-auto  w-full px-3">
-        {postComments?.[postId]?.data?.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
-        ))}
-        </div>
+        { 
+          postComments?.[postId]?.data?.length ==0 && 
+          <div className="w-full text-center p-3">
+            <p>No comments</p>
+          </div>
+        }
+        <commentContext.Provider value={{edit:selectedComment.edit,setEdit,reply:selectedComment.reply,setReply}}>
+          <div className="max-h-[calc(100vh-100px)] relative overflow-y-auto  w-full px-3">
+            {postComments?.[postId]?.data?.map((comment) => (
+              <Comment 
+                key={comment._id} 
+                comment={comment} 
+              />
+            ))}
+            <div className="p-3 sticky bottom-0 w-full bg-white ">
+              {
+                selectedComment.edit && <EditComment/>
+              }{
+                selectedComment.reply && <ReplyComment postId={postId}/>
+              }
+              {
+                !selectedComment.edit && !selectedComment.reply && <AddComment postId={postId}/>
+              }
+            </div>
+          </div>
+        </commentContext.Provider>
+        
+        
       </DrawerContent>
     </Drawer>
   );
 };
 
 const Comment = ({ comment }) => {
+
   const { comments } = useCommunityStore((state) => ({
     comments: state.comments,
   }));
+
   const user = useUserStore((state)=>state.user)
+  const context = React.useContext(commentContext);
 
   const [showChildren, setShowChildren] = React.useState(false);
 
@@ -152,12 +187,11 @@ const Comment = ({ comment }) => {
       <article className="p-6 my-1 text-base rounded-lg min-w-[200px]" >
         <footer className="flex justify-between items-center mb-2">
           <div className="flex items-center">
-            <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+            <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold gap-x-3">
               <UserAvatar img={comments[comment._id]?.author.photoURL || '/home/image.png'} name={comments[comment._id]?.author.name} />
               {comments[comment._id]?.author.name}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              
+            <p className="text-sm text-gray-600 dark:text-gray-400">              
                 {comments[comment._id]?.author.updatedAt}
             </p>
           </div>
@@ -168,6 +202,7 @@ const Comment = ({ comment }) => {
         </p>
         <div className="flex items-center mt-4 space-x-4">
           <button
+          onClick={()=>context.setReply(comment._id)}
             type="button"
             className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium gap-x-2"
           >
@@ -178,12 +213,13 @@ const Comment = ({ comment }) => {
                 user?.uid == comments[comment._id].author.uid &&
                 <button
                 type="button"
+                onClick={()=>context.setEdit(comment._id)}
                 className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium gap-x-2"
             >
                 Edit
             </button>
           }
-          {
+          {/* {
                 user?.uid == comments[comment._id].author.uid &&
                 <button
                 type="button"
@@ -191,7 +227,7 @@ const Comment = ({ comment }) => {
             >
                 Delete
             </button>
-          }
+          } */}
           {comment?.children?.length>0 && <button
             onClick={() => setShowChildren(!showChildren)}
             type="button"
@@ -210,3 +246,141 @@ const Comment = ({ comment }) => {
     </>
   );
 };
+
+
+
+const EditComment = () => {
+  const { comments,editPostComment } = useCommunityStore((state) => ({
+    comments: state.comments,
+    editPostComment: state.editPostComment
+  }));
+
+  const {toast} = useToast()
+
+  const context = React.useContext(commentContext);
+
+  const [value, setValue] = React.useState(comments[context.edit].body);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLoading(true);
+    const res = await editPostComment(context.edit, value);
+    console.log(res)
+    if(res.data.success){
+      context.setEdit(null)
+      toast({
+        title:"Comment Edited"
+      })
+      setLoading(false)
+    }
+    else{
+      toast({
+        title:"Something went wrong",
+        variant:"destructive"
+      })
+      setLoading(false)
+    }
+  }
+
+  const inputRef = React.useRef(null);
+  React.useEffect(() => {
+    inputRef.current.focus();
+  }, [context.edit]);
+
+
+  return (
+    <div className="flex items-center gap-x-2  w-full">
+      <Textarea ref={inputRef} value={value} onChange={(e)=>setValue(e.target.value)} />
+      <Button onClick={()=>context.setEdit(null)} variant="outline" className="rounded-full">Cancel</Button>
+      <Button onClick={handleEdit} loading={loading} className="rounded-full" >Edit</Button>
+    </div>
+  )
+}
+
+const ReplyComment = ({postId}) => {
+  const { commentOnPost } = useCommunityStore((state) => ({
+    commentOnPost: state.commentOnPost
+  }));
+
+  const {toast} = useToast()
+
+  const context = React.useContext(commentContext);
+
+  const [value, setValue] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const handleReply = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLoading(true);
+    const res = await commentOnPost(postId,context.reply, value);
+    console.log(res)
+    if(res.data.success){
+      context.setReply(null)
+      toast({
+        title:"Reply Added"
+      })
+      setLoading(false)
+    }
+    else{
+      toast({
+        title:"Something went wrong",
+        variant:"destructive"
+      })
+      setLoading(false)
+    }
+  }
+
+  const inputRef = React.useRef(null);
+  React.useEffect(() => {
+    inputRef.current.focus();
+  }, [context.reply]);
+
+  return (
+    <div className="flex items-center gap-x-2  w-full">
+      <Textarea ref={inputRef} value={value} onChange={(e)=>setValue(e.target.value)} />
+      <Button onClick={()=>context.setReply(null)} variant="outline" className="rounded-full">Cancel</Button>
+      <Button onClick={handleReply} loading={loading} className="rounded-full" >Reply</Button>
+    </div>
+  )
+}
+
+const AddComment = ({postId}) => {
+  const { commentOnPost } = useCommunityStore((state) => ({
+    commentOnPost: state.commentOnPost
+  }));
+
+  const {toast} = useToast()
+
+  const [value, setValue] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const handleComment = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLoading(true);
+    const res = await commentOnPost(postId,null, value);
+    if(res.data.success){
+      toast({
+        title:"Comment Added"
+      })
+      setLoading(false)
+    }
+    else{
+      toast({
+        title:"Something went wrong",
+        variant:"destructive"
+      })
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-x-2  w-full">
+      <Input className="border-t-transparent border-x-transparent" value={value} onChange={(e)=>setValue(e.target.value)} placeholder="add a comment" />
+      <Button onClick={handleComment} loading={loading} className="rounded-full" >Comment</Button>
+    </div>
+  )
+}

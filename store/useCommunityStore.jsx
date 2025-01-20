@@ -1,7 +1,16 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { requestHandler } from "@/lib/requestHandler";
-import { comment } from "postcss";
 import { create } from "zustand";
+
+const buildCommentTree = (comments, parentId = null) => {
+    return comments
+      .filter((comment) => comment.parentComment === parentId)
+      .map((comment) => ({
+        _id: comment._id,
+        parent: comment.parentComment,
+        children: buildCommentTree(comments, comment._id),
+      }));
+  };
 
 export const useCommunityStore = create((set, get) => ({
     posts: {},
@@ -87,6 +96,28 @@ export const useCommunityStore = create((set, get) => ({
                     questions: { ...get().questions, [data.data.question._id]: data.data.question } 
                 })
             },
+        )
+        return res
+    },
+    addQuestionAnswer: async (id, body) => {
+        const res = requestHandler(
+            axiosInstance.post(`/posts`,{question:id,body}),
+            (data) => {
+                const post = data.data.post[0]
+                set({ 
+                    questions: { 
+                        ...get().questions, 
+                        [id]: { 
+                            ...get().questions[id], 
+                            data: { 
+                                ...get().questions[id].data, 
+                                relatedPosts: [...get().questions[id].data.relatedPosts, post._id] 
+                            } 
+                        } 
+                    },
+                    posts: { ...get().posts, [post._id]: post } 
+                })
+            }
         )
         return res
     },
@@ -208,17 +239,6 @@ export const useCommunityStore = create((set, get) => ({
         return res
     },
     getPostComments: async (id) => {
-
-        const buildCommentTree = (comments, parentId = null) => {
-            return comments
-              .filter((comment) => comment.parentComment === parentId)
-              .map((comment) => ({
-                _id: comment._id,
-                parent: comment.parentComment,
-                children: buildCommentTree(comments, comment._id),
-              }));
-          };
-
         const res = await requestHandler(
             axiosInstance.get(`/posts/${id}/comments`),
             (data) => {
@@ -261,9 +281,28 @@ export const useCommunityStore = create((set, get) => ({
         const res = requestHandler(
             axiosInstance.post(`/posts/${id}/comments`,parent==null?{body}:{body,parentComment:parent}),
             (data)=>{
-
+                get().getPostComments(id)
+            },{
+                setLoading : (loading) => {
+                    set({ 
+                        postComments: { ...get().postComments, [id]: { 
+                            ...get().postComments[id],
+                            loaded: false, 
+                            loading 
+                        } } 
+                    })
+                },
+                setError : (error) => {
+                    set({ 
+                        postComments: { ...get().postComments, [id]: { 
+                            ...get().postComments[id], 
+                            error
+                         } } 
+                    })
+                }
             }
         )
+        return res
     },
     deleteCommentFromPost : async (commentId) => {
         const prevTree = get().postComments
@@ -321,10 +360,7 @@ export const useCommunityStore = create((set, get) => ({
             axiosInstance.patch(`/comments/${id}`,{body}),
             (data)=>{
                 if(data.success){
-                    set({
-                        ...get().comments,
-                        [id]:data.data.comment
-                    })
+                    get().getPostComments(data.data.comment.post)
                 }
             },{
                 setError:()=>{
@@ -337,6 +373,7 @@ export const useCommunityStore = create((set, get) => ({
                 }
             }
         )
+        return res
     }
 
 }))

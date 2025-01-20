@@ -29,17 +29,18 @@ export const PostDialog = ({
 
   const {toast} = useToast()
 
-  const {createPost} = useCommunityStore((state)=>({
-    createPost:state.createPost
+  const {createPost,addQuestionAnswer} = useCommunityStore((state)=>({
+    createPost:state.createPost,
+    addQuestionAnswer:state.addQuestionAnswer
   }))
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await createPost(title, content, tags);
+    const res = questionId ? await addQuestionAnswer(questionId,content) : await createPost(title, content, tags);
     if(res.success){
         toast({
-            title: 'Post added successfully',
+            title: questionId?"Answer added":'Post added successfully',
         })
         setLoading(false)
     }else{
@@ -63,10 +64,10 @@ export const PostDialog = ({
             size="sm"
             className="rounded-full w-full hover:bg-primary hover:text-white"
           >
-            <span>
+            {!questionId && <span>
               <MdPostAdd className="scale-125" />
-            </span>
-            <span>Post </span>
+            </span>}
+            <span>{ questionId?"Add Answer": "Post"} </span>
           </Button>
         )}
       </DialogTrigger>
@@ -75,7 +76,9 @@ export const PostDialog = ({
         {/* <div className="bg-white rounded-lg shadow-lg p-6"> */}
 
         <form onSubmit={handleSubmit} className="space-y-6 w-full">
-          <div>
+          {
+            !questionId &&
+            <div>
             <label
               htmlFor="title"
               className="block text-sm font-medium text-gray-700 mb-1"
@@ -90,8 +93,8 @@ export const PostDialog = ({
               placeholder="What would you like to share?"
               required
             />
-          </div>
-          <div>
+          </div>}
+          {!questionId && <div>
             <label
               htmlFor="tags"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -103,7 +106,7 @@ export const PostDialog = ({
               onChange={setTags}
               maxTags={5}
             />
-          </div>
+          </div>}
 
           <div>
             <label

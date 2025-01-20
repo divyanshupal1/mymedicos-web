@@ -9,7 +9,7 @@ const CommunityLayout = ({children}) => {
       <div className='h-fit md:h-full w-full fixed bottom-0 left-0 max-md:z-50 md:w-1/5 md:max-w-md md:min-h-screen md:block md:sticky md:top-0'>
          <CommunitySidebar/>
       </div>
-      <div className='w-full md:w-3/5 max-w-2xl h-full min-h-screen pt-3 px-2  border-gray-200'>
+      <div className='w-full md:w-3/5 max-w-2xl h-full min-h-screen pt-3 px-2  border-gray-200 pb-[100px]'>
           {
             children
           }
