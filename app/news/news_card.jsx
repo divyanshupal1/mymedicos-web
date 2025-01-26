@@ -1,78 +1,89 @@
+// components/NewsCard.jsx
 "use client"
-import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+import { Timestamp } from "firebase/firestore";
+import { 
+  Drawer, 
+  DrawerClose, 
+  DrawerContent, 
+  DrawerDescription, 
+  DrawerHeader, 
+  DrawerTitle, 
+  DrawerTrigger 
 } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
+import { 
+  Filter, 
+  Search, 
+  ChevronFirst, 
+  ChevronLeft, 
+  ChevronRight 
+} from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export function NewsCard({ item }) {
-  item = JSON.parse(item)
-  const [isExpanded, setIsExpanded] = useState(false);
+  item = JSON.parse(item);
+  const time = Timestamp.fromMillis(item.Time._seconds * 1000).toDate();
 
-  const time = Timestamp.fromMillis(item.Time._seconds * 1000).toDate()
-
-  let date = time.toLocaleDateString("en-US", {
+  const date = time.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-full flex flex-col items-start justify-start rounded-md max-sm:gap-y-3 gap-x-4 border border-gray-200 shadow-sm">
-        <div className="image rounded-md overflow-hidden w-full min-w-[300px] aspect-[2/1]" style={{ background: `url(${item.thumbnail})`, backgroundPosition: "center top", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}></div>
-        <div className="news-content flex flex-col items-start justify-between h-max min-h-fit  gap-y-3 p-3">
-          <div className="w-fit text-sm text-neutral-500  font-semibold">{date}</div>
-          <div className="content">
-            <h2 className="text-xl font-bold">{item.Title}</h2>
-            {/* <div dangerouslySetInnerHTML={{ __html: item.Description.slice(0, 200) }}></div> */}
-            
-          </div>
+    <div className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
+      <div 
+        className="aspect-video w-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+        style={{
+          backgroundImage: `url(${item.thumbnail})`,
+        }}
+      />
+      <div className="p-4 space-y-3">
+        <div className="text-sm text-gray-500 flex items-center justify-between">
+          <span>{date}</span>
+          <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-full">
+            {item.category || 'News'}
+          </span>
         </div>
-        <div className=" flex gap-4 mt-auto p-3 w-full justify-start items-center">
-        {item.Description.length > 100 && (
-              <Drawer>
-                <DrawerTrigger className="text-primary"><Button variant="secondary" className="rounded-full">Read More..</Button></DrawerTrigger>
-                <DrawerContent >
-                  <DrawerHeader>
-                    <DrawerTitle>{item.Title}</DrawerTitle>
-                    <DrawerDescription>{date}</DrawerDescription>
-                  </DrawerHeader>
-                  <div className="w-full whitespace-normal p-6 max-h-[calc(100vh-200px)] overflow-y-auto" dangerouslySetInnerHTML={{ __html: item.Description }}></div>
-                  <DrawerFooter>
-                    <DrawerClose>
-                      <Button variant="outline">Close</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </DrawerContent>
-              </Drawer>
-            )}
-            {
-              item?.URL !== "" &&
-              <a href={item.URL}>
-                <div className="continue  w-fit text-neutral-700 px-4 py-1 rounded-full font-medium cursor-pointer">Read full article</div>
-              </a>
-            }
+        <h2 className="text-xl font-bold text-gray-800 line-clamp-2">{item.Title}</h2>
+        <div className="flex justify-between items-center mt-4">
+          {item.Description.length > 100 && (
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button variant="outline" size="sm" className="rounded-full">
+                  Read More
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>{item.Title}</DrawerTitle>
+                  <DrawerDescription>{date}</DrawerDescription>
+                </DrawerHeader>
+                <div 
+                  className="p-6 max-h-[70vh] overflow-y-auto prose prose-sm"
+                  dangerouslySetInnerHTML={{ __html: item.Description }}
+                />
+                <div className="p-4">
+                  <DrawerClose asChild>
+                    <Button variant="outline">Close</Button>
+                  </DrawerClose>
+                </div>
+              </DrawerContent>
+            </Drawer>
+          )}
+          {item?.URL && (
+            <a 
+              href={item.URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-blue-600 hover:underline flex items-center gap-1"
+            >
+              Full Article <ChevronRight size={16} />
+            </a>
+          )}
         </div>
-
       </div>
-
-      {/* <div className="separator w-full flex gap-x-1  overflow-hidden">
-        {
-          Array(400).fill().map((_, i) => (
-            <div className="w-[2px] h-1 bg-gray-400 shrink-0" key={i}></div>
-          ))
-        }
-      </div> */}
     </div>
-  )
+  );
 }

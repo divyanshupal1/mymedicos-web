@@ -12,7 +12,7 @@ import UserObserver from "@/components/navigation/user_observer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Mymedicos",
+  title: "mymedicos",
   description: "India’s first Premier Medical Community app, connecting healthcare experts seamlessly",
 };
 
