@@ -8,13 +8,15 @@ export default async function NewsPage({ searchParams }) {
   const searchQuery = search.query || "";
   const perPage = 15;
 
+  console.log("searchQuery", searchQuery,"loading news....");
+
   let newsQuery = admin.firestore().collection("MedicalNews");
 
   if (searchQuery) {
     const normalizedQuery = searchQuery.toLowerCase();
     newsQuery = newsQuery
-      .where("Title_lower", ">=", normalizedQuery)
-      .where("Title_lower", "<=", normalizedQuery + "\uf8ff");    
+      .where("Title", "in", [normalizedQuery])
+      .where("Title", "in", [normalizedQuery + "\uf8ff"]);    
   }    
 
   newsQuery = newsQuery

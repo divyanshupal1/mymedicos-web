@@ -1,10 +1,10 @@
 "use client"
-import React, { useEffect } from "react"
+import React, { Suspense, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 
-const CategoriesSlider =  ({exams}) => {  
+const CategoriesSliderComponent =  ({exams}) => {  
     exams = JSON.parse(exams)  
     let selected = useSearchParams().get('e')
     selected = selected ? selected.replaceAll("-"," ") : null
@@ -48,6 +48,10 @@ const CategoriesSlider =  ({exams}) => {
             }
         </div>
     )
+}
+
+const CategoriesSlider = ({exams}) => {
+    return <Suspense fallback={<div>Loading...</div>}><CategoriesSliderComponent exams={exams}/></Suspense>
 }
 
 export default CategoriesSlider

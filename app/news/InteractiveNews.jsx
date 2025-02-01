@@ -68,10 +68,10 @@ export function InteractiveNews({ news, totalPages, currentPage }) {
   const [loading, setLoading] = useState(false);
 
   const handleSearch = (query) => {
-    setLoading(true);
-    setSearchQuery(query);
+    // setLoading(true);
+    // setSearchQuery(query);
     router.push(`/news?page=1&query=${encodeURIComponent(query)}`)
-      .finally(() => setLoading(false)); // Reset loading after navigation
+      // .finally(() => setLoading(false)); // Reset loading after navigation
   };  
 
   return (
@@ -80,8 +80,8 @@ export function InteractiveNews({ news, totalPages, currentPage }) {
       <div>
         <div className="sticky top-0 z-10 bg-white">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
-            <SearchBar onSearch={handleSearch} />
-            <NewsFilter filters={filters} setFilters={setFilters} />
+            {/* <SearchBar onSearch={handleSearch} />
+            <NewsFilter filters={filters} setFilters={setFilters} /> */}
             <NewsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
         </div>

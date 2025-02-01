@@ -2,11 +2,14 @@
 import GTTestPage from '@/components/testpage/gt-testpage'
 import LoadingScreen from '@/components/ui/loading-screen'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/userStore'
 import { AlreadySumbitted, UpgradePlan } from '../components/defaultPages'
 
+const Page = () => {
+  return <Suspense fallback={LoadingScreen}><Test/></Suspense>
+}
 
 const Test = () => {
 
@@ -65,4 +68,4 @@ const Test = () => {
   return  <GTTestPage category={section} quizData={JSON.stringify(quiz)}/>
 }
 
-export default Test
+export default Page
