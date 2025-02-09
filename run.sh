@@ -13,8 +13,8 @@ else
 fi
 
 echo -e "\n Building...."
-npm i
-npm run build
+yarn
+yarn build
 
 if [ $? -eq 0 ]; then
         echo "build successfull...."
@@ -30,7 +30,7 @@ if [ $? -eq 0 ]; then
         echo "deployment success"
 else
 	echo "starting website.."
-        pm2 start npm --name "mymedicos-website" -- start
+        pm2 start yarn --name "mymedicos-website" -- start
         if [ $? -eq 0 ]; then
                 echo -e "success.."
                 exit 1
