@@ -28,7 +28,7 @@ const getCourseDetails = async (
 };
 
 const CourseOverview = async ({ params }) => {
-
+    params = await params
     const course = await getCourseDetails(params.id.split("-").pop());
     if (course.error) return <div>{course.error}</div>;
 

@@ -5,7 +5,8 @@ import React from 'react'
 import CourseCard from './course_card'
 
 const RecommendedCourses = async () => {
-    const token = cookies().get('authtoken').value
+    const cookie = await cookies()
+    const token = cookie.get('authtoken').value
     const decoded = decode(token)
     const interests = decoded.Interests || ['Dermatology']
     const coursesDocs = await admin.firestore().collection('Exclusive_Course').where('subject','in',interests).limit(6).get()

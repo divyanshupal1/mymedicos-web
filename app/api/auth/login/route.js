@@ -17,12 +17,12 @@ export async function POST(req) {
                 response.cookies.set("authtoken", token)
                 resolve(response);
             }).catch((error) => {
-                //console.log("Error fetching user data:", error);
+                console.log("Error fetching user data:", error);
                 reject(JSON.stringify({message:"unauthorized",success:false}));
             });
         });   
     } catch (error) {
-        //console.log(error);
+        console.log(error);
         return new NextResponse().json({message:"unauthorized",success:false})      
     }
 }
@@ -34,19 +34,22 @@ const generateToken = async (user) => {
         phoneNumber:phone_number,
         uid,
     }
-    await admin.firestore().collection('SubscribedUsers').doc(phone_number).get().then((doc)=>{
-        if(doc.exists) {
-            tokenData.subscription = doc.data();
-        }
-        else{
-            tokenData.subscription = null;
-        }
-    })
-    await admin.firestore().collection('users').where("Phone Number","==",phone_number).get().then(doc=>{
-        tokenData.doc = doc.docs[0]?.data() || null
-    })
+    if(phone_number){
+        await admin.firestore().collection('SubscribedUsers').doc(phone_number).get().then((doc)=>{
+            if(doc.exists) {
+                tokenData.subscription = doc.data();
+            }
+            else{
+                tokenData.subscription = null;
+            }
+        })
+        await admin.firestore().collection('users').where("Phone Number","==",phone_number).get().then(doc=>{
+            tokenData.doc = doc.docs[0]?.data() || null
+        })
+    }
+    
     const token = sign(tokenData, process.env.SECRET, {
         expiresIn: "1d",
     });
-    return {token,subscription:tokenData.subscription,doc:tokenData.doc};   
+    return {token,subscription:tokenData.subscription,doc:tokenData.doc};
 }

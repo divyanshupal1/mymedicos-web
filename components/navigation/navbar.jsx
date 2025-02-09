@@ -56,11 +56,11 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='w-full flex flex-col  z-[1000] bg-white dark:bg-background border-transparent dark:border-green-950'>
+        <nav className='w-full flex flex-col  bg-white dark:bg-background border-transparent dark:border-green-950'>
             <div className='w-full flex justify-between items-center p-3 px-5 '>
-                <div className='logo h-8 w-auto grow-0'>
+                <Link href={'/'} className='logo h-8 w-auto grow-0'>
                     <Logo/>
-                </div>
+                </Link>
                 {
                     path[1]!== '' && 
                     <div className='flex items-center justify-evenly gap-x-6 w-auto flex-grow max-w-4xl'>

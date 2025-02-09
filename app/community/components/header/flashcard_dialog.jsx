@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { TagInput } from "./tag_input";
 import { MdOutlineQuickreply } from "react-icons/md";
 import { useToast } from "@/components/ui/use-toast";
 import { useCommunityStore } from "@/store/useCommunityStore";
+// import { QuillEditor } from "../QuillEditor";
 
 const QuillEditor = dynamic(() => import("../QuillEditor"), { ssr: false });
 
@@ -114,7 +115,7 @@ export const FlashCardDialog = ({
               Description
             </label>
             <div className="prose max-w-none">
-              <QuillEditor value={content} onChange={setContent} />
+                <QuillEditor value={content} onChange={setContent} />
             </div>
           </div>
 

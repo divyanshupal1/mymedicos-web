@@ -4,7 +4,7 @@ import { decodeToken } from "./lib/getDecodedToken"
 import admin from "./lib/firebase_admin"
 
 export const getLoggedInUser = async () => {
-    const {token,error} = decodeToken()
+    const {token,error} = await decodeToken()
     if(error || !token) return {error:"Invalid Token",code:401,success:false}
 
     const uid = token.phoneNumber
@@ -19,7 +19,7 @@ export const getLoggedInUser = async () => {
 }
 
 export const saveProgress = async (course,quiz,type,progress) => {
-    const {token,error} = decodeToken()
+    const {token,error} = await decodeToken()
     if(error || !token) return {error:"Invalid Token",code:401,success:false}
 
     const uid = token.phoneNumber
@@ -42,7 +42,7 @@ export const saveProgress = async (course,quiz,type,progress) => {
 }
 
 export const submitQuiz = async (course,quiz,type,submissions) => {
-    const {token,error} = decodeToken()
+    const {token,error} = await decodeToken()
     if(error || !token) return {error:"Invalid Token",code:401,success:false}
 
     const uid = token.phoneNumber
@@ -66,7 +66,7 @@ export const submitQuiz = async (course,quiz,type,submissions) => {
 }
 
 export const getSubmissions = async (course,quiz,type) => {
-    const {token,error} = decodeToken()
+    const {token,error} = await decodeToken()
     if(error || !token) return {error:"Invalid Token",code:401,success:false}
 
     const uid = token.phoneNumber

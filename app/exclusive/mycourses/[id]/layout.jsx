@@ -6,7 +6,7 @@ const CourseLayout = async ({
     children,
 }) => {
     
-    const { token, error } = decodeToken();
+    const { token, error } = await decodeToken();
     if (error || !token) return <div>{error}</div>;
 
     return (

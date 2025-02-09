@@ -13,7 +13,7 @@ const TestPage = dynamic(() => import('./testpage'),{
 const Test = async ({searchParams}) => {
 
   const {course,quiz,type,name} = await searchParams
-  const {token,error} = decodeToken()
+  const {token,error} = await decodeToken()
 
   if(!course || !quiz || !type) return <div>Invalid Request</div>
   if(error || !token) return <div>{error}</div>

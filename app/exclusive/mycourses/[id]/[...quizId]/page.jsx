@@ -78,19 +78,19 @@ const QuizDetails = ({params}) => {
         <div className='grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
             <div className='bg-white p-4 rounded-lg shadow-md'>
                 <h3 className='text-lg font-semibold'>Submissions</h3>
-                <h6 className='text-sm text-neutral-800'>{Object.keys(submissions).length}</h6>
+                <h6 className='text-sm text-neutral-800'>{Object.keys(submissions).length || 0}</h6>
             </div>
             <div className='bg-white p-4 rounded-lg shadow-md'>
                 <h3 className='text-lg font-semibold'>Average Score</h3>
-                <h6 className='text-sm text-neutral-800'>{stats.average}</h6>
+                <h6 className='text-sm text-neutral-800'>{stats.average || 0}</h6>
             </div>
             <div className='bg-white p-4 rounded-lg shadow-md'>
                 <h3 className='text-lg font-semibold'>Highest Score</h3>
-                <h6 className='text-sm text-neutral-800'>{stats.highest}</h6>
+                <h6 className='text-sm text-neutral-800'>{stats.highest || 0}</h6>
             </div>
             <div className='bg-white p-4 rounded-lg shadow-md'>
                 <h3 className='text-lg font-semibold'>Lowest Score</h3>
-                <h6 className='text-sm text-neutral-800'>{stats.lowest}</h6>
+                <h6 className='text-sm text-neutral-800'>{stats.lowest || 0}</h6>
             </div>
         </div>
         <h2 className='text-lg font-medium mt-6'>All Submissions</h2>

@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 import PayNow from '../components/pay_now'
 
 const ExclusiveCheckout = async ({ params }) => {
-    const { token, error } = decodeToken()
+    const { token, error } = await decodeToken()
     if (error || !token) permanentRedirect('/auth/login')
 
     const orderDoc = await admin.firestore().collection('PlansOrders').doc(params.orderId).get()

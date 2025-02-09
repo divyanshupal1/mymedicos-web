@@ -16,8 +16,8 @@ const CourseOverview = dynamic(() => import("../components/course-overview"),{
 
 
 const CoursePage = async ({params}) => {
-
-  const {token,error} = decodeToken()
+  params = await params
+  const {token,error} = await decodeToken()
   if(error || !token) return <div>{error}</div>
 
 

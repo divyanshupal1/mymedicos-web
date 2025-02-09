@@ -8,7 +8,7 @@ const Precesion = () => {
                     <h1 className='text-2xl font-semibold text-left w-full'>Precision at Your Fingertips</h1>
                     <p className='text-lg text-gray-600 mt-4 max-w-lg'>mymedicos offers an extensive suite of 238+ medical calculators tailored for doctors and healthcare professionals. These calculators are designed to simplify complex computations and enhance decision-making efficiency in clinical practice.</p>
                 </div>
-                <div className=''>
+                <div className='max-md:hidden'>
                     <img src='/learn.png' className='w-full aspect-square scale-x scale-x-[-1]' alt={"dsf"} />
                 </div>
             </div>

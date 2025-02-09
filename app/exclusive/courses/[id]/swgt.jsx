@@ -37,7 +37,7 @@ const getSwgtQuizes = async (docId) => {
 }
 
 const SWGTQuizes = async ({ id }) => {
-    const {token,error} = decodeToken()
+    const {token,error} = await decodeToken()
     if(error || !token) return <div>{error}</div>
 
     const quizes = await getSwgtQuizes(id)

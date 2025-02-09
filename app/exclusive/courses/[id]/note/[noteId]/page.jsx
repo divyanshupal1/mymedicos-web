@@ -6,7 +6,7 @@ import { permanentRedirect } from 'next/navigation'
 
 const NotePage = async ({params}) => {
   const {id,noteId} = params
-  const {token,error} = decodeToken()
+  const {token,error} = await decodeToken()
 
   if(error || !token) return <div>{error}</div>
 

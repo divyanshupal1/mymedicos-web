@@ -5,8 +5,8 @@ import admin from '@/lib/firebase_admin'
 import CourseCard from '../components/course_card'
 
 const MyCoursesPage = async () => {
-  const {token, error} = decodeToken()
-  if(error || !token) permanentRedirect('/login')
+  const {token, error} = await await decodeToken()
+  if(error || !token) permanentRedirect('/auth/login')
   
   const subscriptions = await admin.firestore().collection('SubscribedUsers').doc(token.phoneNumber).get()
   const courses = subscriptions.data()?.Exclusive

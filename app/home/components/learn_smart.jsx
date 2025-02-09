@@ -26,7 +26,7 @@ const LearnSmart = () => {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className='max-md:hidden'>
                     <img src='/learn.png' className='w-full aspect-square' alt={"dsf"} />
                 </div>
             </div>

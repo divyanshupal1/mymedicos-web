@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
 const page = async ({searchParams}) => {
       const {course,quiz,type,subid} = await searchParams
-      const {token,error} = decodeToken()
+      const {token,error} = await decodeToken()
     
       if(!course || !quiz || !type) return <div>Invalid Request</div>
       if(error || !token) return <div>{error}</div>
